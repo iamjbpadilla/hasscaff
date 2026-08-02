@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ChevronRight, Home } from 'lucide-react';
+import { ChevronRight } from 'lucide-react';
 
 interface BreadcrumbProps {
   items: Array<{ name: string; path: string }>;
@@ -9,12 +9,9 @@ interface BreadcrumbProps {
 const Breadcrumb: React.FC<BreadcrumbProps> = ({ items }) => {
   return (
     <nav className="flex items-center space-x-2 text-sm text-gray-600 dark:text-gray-400 py-6" aria-label="Breadcrumb">
-      <Link to="/" className="hover:text-brand-primary dark:hover:text-brand-primary transition-colors">
-        <Home className="w-4 h-4" />
-      </Link>
       {items.map((item, index) => (
         <React.Fragment key={item.path}>
-          <ChevronRight className="w-4 h-4" />
+          {index > 0 && <ChevronRight className="w-4 h-4" />}
           {index === items.length - 1 ? (
             <span className="text-gray-900 dark:text-white font-medium">{item.name}</span>
           ) : (

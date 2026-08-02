@@ -11,11 +11,7 @@ const Home: React.FC = () => {
   return (
     <>
       <SEO />
-      <PageLayout
-        breadcrumbs={[
-          { name: 'Home', path: '/' }
-        ]}
-      >
+      <PageLayout>
         <Hero />
         <Services />
         <ServiceAreas />
