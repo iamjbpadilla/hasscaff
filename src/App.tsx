@@ -27,9 +27,18 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/services" element={<Services />} />
+            <Route path="/services/hang-on-systems" element={<HangOnSystems />} />
+            <Route path="/services/labour-hire" element={<LabourHire />} />
+            <Route path="/services/commercial" element={<Commercial />} />
+            <Route path="/services/residential" element={<Residential />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/admin" element={<Admin />} />
+            <Route path="/locations" element={<Locations />} />
+            <Route path="/locations/brisbane" element={<Brisbane />} />
+            <Route path="/locations/gold-coast" element={<GoldCoast />} />
+            <Route path="/locations/sunshine-coast" element={<SunshineCoast />} />
+            {/* Legacy routes for backward compatibility */}
             <Route path="/brisbane" element={<Brisbane />} />
             <Route path="/gold-coast" element={<GoldCoast />} />
             <Route path="/sunshine-coast" element={<SunshineCoast />} />
@@ -37,7 +46,6 @@ function App() {
             <Route path="/commercial" element={<Commercial />} />
             <Route path="/labour-hire" element={<LabourHire />} />
             <Route path="/hang-on-systems" element={<HangOnSystems />} />
-            <Route path="/locations" element={<Locations />} />
           </Routes>
         </ThemeProvider>
       </BrowserRouter>
