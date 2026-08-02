@@ -1,7 +1,6 @@
 import PageLayout from '../components/layout/PageLayout';
 import PageHeader from '../components/layout/PageHeader';
 import RootedValues from '../components/sections/RootedValues';
-import WhyChooseUs from '../components/sections/WhyChooseUs';
 import { COMPANY_INFO } from '../lib/constants';
 import SEO from '../components/common/SEO';
 import Schema from '../components/common/Schema';
@@ -80,7 +79,6 @@ const About: React.FC = () => {
           </div>
         </section>
 
-        <WhyChooseUs />
         <RootedValues />
 
         {/* CTA */}
