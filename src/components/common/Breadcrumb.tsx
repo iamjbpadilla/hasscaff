@@ -8,7 +8,7 @@ interface BreadcrumbProps {
 
 const Breadcrumb: React.FC<BreadcrumbProps> = ({ items }) => {
   return (
-    <nav className="flex items-center space-x-2 text-sm text-gray-600 dark:text-gray-400 py-4" aria-label="Breadcrumb">
+    <nav className="flex items-center space-x-2 text-sm text-gray-600 dark:text-gray-400 py-6" aria-label="Breadcrumb">
       <Link to="/" className="hover:text-brand-primary dark:hover:text-brand-primary transition-colors">
         <Home className="w-4 h-4" />
       </Link>
