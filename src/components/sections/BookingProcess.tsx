@@ -24,8 +24,14 @@ const BookingProcess: React.FC = () => {
   ];
 
   return (
-    <section className="py-24">
+    <section className="py-24 bg-gray-50 dark:bg-gray-900/50">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
+        <div className="text-center mb-16">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900 dark:text-white">How It Works</h2>
+          <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+            Get your scaffolding project started in 3 simple steps
+          </p>
+        </div>
         <div className="relative">
           {/* Connection Line */}
           <div className="hidden md:block absolute top-16 left-0 right-0 h-0.5 bg-gradient-to-r from-brand-primary/20 via-brand-primary/40 to-brand-primary/20 z-0"></div>
@@ -52,6 +58,16 @@ const BookingProcess: React.FC = () => {
               </React.Fragment>
             ))}
           </div>
+        </div>
+
+        {/* CTA */}
+        <div className="mt-16 text-center">
+          <a 
+            href="#quote"
+            className="inline-flex items-center justify-center px-8 py-4 bg-brand-primary text-white font-semibold rounded-full hover:bg-brand-secondary transition-all duration-300 shadow-lg hover:shadow-xl"
+          >
+            Start Your Scaffolding Project
+          </a>
         </div>
       </div>
     </section>

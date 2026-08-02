@@ -50,6 +50,16 @@ const Services: React.FC = () => {
             </Link>
           ))}
         </div>
+
+        {/* CTA */}
+        <div className="mt-12 text-center">
+          <a 
+            href="#quote"
+            className="inline-flex items-center justify-center px-8 py-4 bg-brand-primary text-white font-semibold rounded-full hover:bg-brand-secondary transition-all duration-300 shadow-lg hover:shadow-xl"
+          >
+            Get a Quote for Your Project
+          </a>
+        </div>
       </div>
     </section>
   );
