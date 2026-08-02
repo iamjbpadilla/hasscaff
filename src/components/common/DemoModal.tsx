@@ -23,9 +23,9 @@ const DemoModal: React.FC = () => {
 
   return (
     <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-      <div className="bg-white dark:bg-gray-900 border-2 border-brand-primary rounded-3xl max-w-2xl w-full shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+      <div className="bg-white dark:bg-gray-900 border-2 border-gray-300 dark:border-gray-700 rounded-3xl max-w-2xl w-full shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
         {/* Header */}
-        <div className="bg-gradient-to-r from-brand-primary to-brand-secondary p-5 relative flex-shrink-0">
+        <div className="bg-gradient-to-r from-gray-600 to-gray-700 p-5 relative flex-shrink-0">
           <button
             onClick={handleClose}
             className="absolute top-4 right-4 text-white/80 hover:text-white transition-colors"
@@ -45,8 +45,8 @@ const DemoModal: React.FC = () => {
           {/* Stakeholders */}
           <div className="grid grid-cols-2 gap-3">
             <div className="flex items-start gap-3">
-              <div className="flex-shrink-0 w-10 h-10 bg-brand-primary/10 dark:bg-brand-primary/20 rounded-lg flex items-center justify-center">
-                <Target className="w-5 h-5 text-brand-primary" />
+              <div className="flex-shrink-0 w-10 h-10 bg-gray-100 dark:bg-gray-800 rounded-lg flex items-center justify-center">
+                <Target className="w-5 h-5 text-gray-600 dark:text-gray-400" />
               </div>
               <div>
                 <h3 className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-1">Client</h3>
@@ -55,8 +55,8 @@ const DemoModal: React.FC = () => {
               </div>
             </div>
             <div className="flex items-start gap-3">
-              <div className="flex-shrink-0 w-10 h-10 bg-brand-primary/10 dark:bg-brand-primary/20 rounded-lg flex items-center justify-center">
-                <User className="w-5 h-5 text-brand-primary" />
+              <div className="flex-shrink-0 w-10 h-10 bg-gray-100 dark:bg-gray-800 rounded-lg flex items-center justify-center">
+                <User className="w-5 h-5 text-gray-600 dark:text-gray-400" />
               </div>
               <div>
                 <h3 className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-1">Developed By</h3>
@@ -67,8 +67,8 @@ const DemoModal: React.FC = () => {
           </div>
 
           {/* Project Overview */}
-          <div className="bg-brand-primary/5 dark:bg-brand-primary/10 rounded-xl p-3 border border-brand-primary/20">
-            <h3 className="text-sm font-semibold text-brand-primary mb-2">Project Overview</h3>
+          <div className="bg-gray-50 dark:bg-gray-800 rounded-xl p-3 border border-gray-200 dark:border-gray-700">
+            <h3 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Project Overview</h3>
             <p className="text-gray-700 dark:text-gray-300 text-xs leading-relaxed">
               This demonstration showcases a comprehensive digital platform renovation designed to scale organic lead generation across South East Queensland. The system includes modern UI/UX design, integrated admin management, and streamlined customer engagement workflows.
             </p>
@@ -79,19 +79,19 @@ const DemoModal: React.FC = () => {
             <h3 className="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-2">Key Capabilities</h3>
             <ul className="space-y-1.5 text-xs text-gray-700 dark:text-gray-300">
               <li className="flex items-start gap-2">
-                <span className="text-brand-primary mt-0.5">•</span>
+                <span className="text-gray-600 dark:text-gray-400 mt-0.5">•</span>
                 <span>Enhanced quote request management system</span>
               </li>
               <li className="flex items-start gap-2">
-                <span className="text-brand-primary mt-0.5">•</span>
+                <span className="text-gray-600 dark:text-gray-400 mt-0.5">•</span>
                 <span>Admin panel for real-time lead tracking</span>
               </li>
               <li className="flex items-start gap-2">
-                <span className="text-brand-primary mt-0.5">•</span>
+                <span className="text-gray-600 dark:text-gray-400 mt-0.5">•</span>
                 <span>Industrial-themed responsive design</span>
               </li>
               <li className="flex items-start gap-2">
-                <span className="text-brand-primary mt-0.5">•</span>
+                <span className="text-gray-600 dark:text-gray-400 mt-0.5">•</span>
                 <span>Optimized for South East QLD market</span>
               </li>
             </ul>
@@ -103,13 +103,13 @@ const DemoModal: React.FC = () => {
             <a
               href="/admin"
               onClick={handleClose}
-              className="flex items-center justify-between gap-3 px-4 py-3 bg-brand-primary/10 dark:bg-brand-primary/20 border border-brand-primary/30 rounded-xl hover:bg-brand-primary/20 dark:hover:bg-brand-primary/30 transition-all group"
+              className="flex items-center justify-between gap-3 px-4 py-3 bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-xl hover:bg-gray-200 dark:hover:bg-gray-700 transition-all group"
             >
               <div className="flex items-center gap-3">
-                <LayoutDashboard className="w-5 h-5 text-brand-primary" />
+                <LayoutDashboard className="w-5 h-5 text-gray-600 dark:text-gray-400" />
                 <span className="text-sm font-medium text-gray-900 dark:text-white">Admin Panel</span>
               </div>
-              <ArrowRight className="w-4 h-4 text-brand-primary group-hover:translate-x-1 transition-transform" />
+              <ArrowRight className="w-4 h-4 text-gray-600 dark:text-gray-400 group-hover:translate-x-1 transition-transform" />
             </a>
           </div>
 
@@ -119,14 +119,14 @@ const DemoModal: React.FC = () => {
             <div className="space-y-2">
               <a
                 href="mailto:jubetpadilla@gmail.com"
-                className="flex items-center gap-3 text-xs text-gray-700 dark:text-gray-300 hover:text-brand-primary dark:hover:text-brand-primary transition-colors"
+                className="flex items-center gap-3 text-xs text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors"
               >
                 <Mail className="w-4 h-4" />
                 <span>jubetpadilla@gmail.com</span>
               </a>
               <a
                 href="tel:+639055746155"
-                className="flex items-center gap-3 text-xs text-gray-700 dark:text-gray-300 hover:text-brand-primary dark:hover:text-brand-primary transition-colors"
+                className="flex items-center gap-3 text-xs text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors"
               >
                 <Phone className="w-4 h-4" />
                 <span>+63 905 574 6155 (PH)</span>
@@ -135,7 +135,7 @@ const DemoModal: React.FC = () => {
                 href="https://linkedin.com/in/jbmayogapadilla"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-3 text-xs text-gray-700 dark:text-gray-300 hover:text-brand-primary dark:hover:text-brand-primary transition-colors"
+                className="flex items-center gap-3 text-xs text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors"
               >
                 <Linkedin className="w-4 h-4" />
                 <span>linkedin.com/in/jbmayogapadilla</span>
@@ -148,7 +148,7 @@ const DemoModal: React.FC = () => {
         <div className="bg-gray-50 dark:bg-gray-800 px-5 py-3 border-t border-gray-200 dark:border-gray-800 flex-shrink-0">
           <button
             onClick={handleClose}
-            className="w-full px-5 py-2.5 bg-brand-primary text-white font-semibold rounded-xl hover:bg-brand-secondary transition-all duration-300 shadow-lg hover:shadow-xl text-sm"
+            className="w-full px-5 py-2.5 bg-gray-600 text-white font-semibold rounded-xl hover:bg-gray-700 transition-all duration-300 shadow-lg hover:shadow-xl text-sm"
           >
             View Demo Platform
           </button>
