@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ShieldCheck, Upload, Phone, Clock } from 'lucide-react';
+import { ShieldCheck, Upload, Phone, Clock, Loader2 } from 'lucide-react';
 import { COMPANY_INFO } from '../../lib/constants';
 
 const QuoteForm: React.FC = () => {
@@ -107,9 +107,16 @@ const QuoteForm: React.FC = () => {
           <button 
             type="submit"
             disabled={isSubmitting}
-            className="w-full px-6 py-4 bg-brand-primary text-white font-semibold rounded-full hover:bg-brand-secondary transition-all duration-300 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap text-lg"
+            className="w-full px-6 py-4 bg-brand-primary text-white font-semibold rounded-full hover:bg-brand-secondary transition-all duration-300 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap text-lg flex items-center justify-center gap-2"
           >
-            {isSubmitting ? 'Sending...' : 'Get My Free Quote'}
+            {isSubmitting ? (
+              <>
+                <Loader2 className="w-5 h-5 animate-spin" />
+                <span>Sending...</span>
+              </>
+            ) : (
+              'Get My Free Quote'
+            )}
           </button>
 
           <div className="flex items-center justify-center gap-2 text-xs text-gray-500 pt-2">
