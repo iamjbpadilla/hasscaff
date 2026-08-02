@@ -2,6 +2,7 @@ import React from 'react';
 import Header from './Header';
 import Footer from './Footer';
 import StickyActionBar from './StickyActionBar';
+import Breadcrumb from '../common/Breadcrumb';
 import { useTheme } from '../../context/ThemeContext';
 
 interface PageLayoutProps {
@@ -9,7 +10,7 @@ interface PageLayoutProps {
   breadcrumbs?: Array<{ name: string; path: string }>;
 }
 
-const PageLayout: React.FC<PageLayoutProps> = ({ children }) => {
+const PageLayout: React.FC<PageLayoutProps> = ({ children, breadcrumbs }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
   const { darkMode, setDarkMode } = useTheme();
 
@@ -28,6 +29,12 @@ const PageLayout: React.FC<PageLayoutProps> = ({ children }) => {
         mobileMenuOpen={mobileMenuOpen}
         setMobileMenuOpen={setMobileMenuOpen}
       />
+      
+      {breadcrumbs && (
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <Breadcrumb items={breadcrumbs} />
+        </div>
+      )}
       
       <main id="main-content" tabIndex={-1}>
         {children}
