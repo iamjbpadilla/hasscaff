@@ -42,13 +42,13 @@ const Header: React.FC<HeaderProps> = ({ darkMode, setDarkMode, mobileMenuOpen, 
     );
   };
   return (
-    <header className="fixed top-0 left-0 right-0 z-40 border-b bg-white/80 backdrop-blur-lg border-gray-200 dark:bg-brand-dark/80 dark:border-gray-800">
+    <header className="fixed top-0 left-0 right-0 z-40 border-b bg-white/90 backdrop-blur-lg border-gray-200 dark:bg-brand-dark/90 dark:border-gray-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-3">
-            <div className="w-10 h-10 bg-brand-primary rounded-lg flex items-center justify-center">
-              <DogIcon className="w-6 h-6" />
+            <div className="w-12 h-12 bg-brand-primary rounded-xl flex items-center justify-center shadow-lg">
+              <DogIcon className="w-7 h-7" />
             </div>
             <div>
               <span className="text-xl font-bold text-gray-900 dark:text-white">{COMPANY_INFO.name}</span>
@@ -57,7 +57,7 @@ const Header: React.FC<HeaderProps> = ({ darkMode, setDarkMode, mobileMenuOpen, 
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-8">
+          <nav className="hidden lg:flex items-center space-x-10">
             <NavLink to="/services">Services</NavLink>
             <NavLink to="/locations">Locations</NavLink>
             <NavLink to="/about">About</NavLink>
@@ -66,24 +66,24 @@ const Header: React.FC<HeaderProps> = ({ darkMode, setDarkMode, mobileMenuOpen, 
           </nav>
 
           {/* Desktop CTA */}
-          <div className="hidden md:flex items-center space-x-4">
+          <div className="hidden md:flex items-center space-x-5">
             <button 
               onClick={() => setDarkMode(!darkMode)}
-              className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-300"
+              className="p-2.5 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-300"
               aria-label="Toggle dark mode"
             >
               {darkMode ? <Sun className="w-5 h-5 text-gray-400" /> : <Moon className="w-5 h-5 text-gray-600" />}
             </button>
             <a 
               href={`tel:${COMPANY_INFO.phone.replace(/\s/g, '')}`}
-              className="flex items-center space-x-2 font-semibold text-sm text-brand-primary"
+              className="flex items-center space-x-2 font-semibold text-sm text-brand-primary hover:text-brand-secondary transition-colors"
             >
-              <Phone className="w-4 h-4 text-brand-primary" />
+              <Phone className="w-4 h-4" />
               <span>{COMPANY_INFO.phone}</span>
             </a>
             <Link 
               to="/contact" 
-              className="px-6 py-3 bg-brand-primary text-white font-semibold text-sm rounded-full hover:bg-brand-secondary transition-colors duration-300 whitespace-nowrap"
+              className="px-6 py-2.5 bg-brand-primary text-white font-semibold text-sm rounded-full hover:bg-brand-secondary transition-colors duration-300 whitespace-nowrap shadow-md hover:shadow-lg"
             >
               Get Quote
             </Link>
@@ -91,7 +91,7 @@ const Header: React.FC<HeaderProps> = ({ darkMode, setDarkMode, mobileMenuOpen, 
 
           {/* Mobile Menu Button */}
           <button 
-            className="md:hidden p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-300"
+            className="md:hidden p-2.5 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-300"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label="Toggle mobile menu"
             aria-expanded={mobileMenuOpen}
@@ -104,13 +104,13 @@ const Header: React.FC<HeaderProps> = ({ darkMode, setDarkMode, mobileMenuOpen, 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
         <div className="md:hidden border-t bg-gray-50 border-gray-200 dark:bg-gray-900 dark:border-gray-800">
-          <div className="px-4 py-4 space-y-3">
+          <div className="px-4 py-6 space-y-4">
             <NavLink to="/services" mobile>Services</NavLink>
             <NavLink to="/locations" mobile>Locations</NavLink>
             <NavLink to="/about" mobile>About</NavLink>
             <NavLink to="/contact" mobile>Contact</NavLink>
             <NavLink to="/admin" mobile>Admin</NavLink>
-            <div className="pt-3 border-t border-gray-200 dark:border-gray-700">
+            <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
               <button 
                 onClick={() => setDarkMode(!darkMode)}
                 className="flex items-center space-x-2 text-brand-primary font-semibold py-2"
