@@ -30,7 +30,7 @@ const PageLayout: React.FC<PageLayoutProps> = ({ children, breadcrumbs }) => {
         setMobileMenuOpen={setMobileMenuOpen}
       />
       
-      <main id="main-content" tabIndex={-1} className="pt-24">
+      <main id="main-content" tabIndex={-1} className="pt-28">
         {breadcrumbs && (
           <div className="max-w-7xl mx-auto px-6 lg:px-8">
             <Breadcrumb items={breadcrumbs} />
