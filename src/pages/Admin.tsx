@@ -5,8 +5,10 @@ import SEO from '../components/common/SEO';
 import Schema from '../components/common/Schema';
 import { MOCK_QUOTE_REQUESTS, SERVICE_LABELS, STATUS_LABELS, STATUS_COLORS, QuoteRequest } from '../lib/mockData';
 import { Search, Filter, Phone, MapPin, FileText, MoreVertical, Building2, Calendar, X } from 'lucide-react';
+import { useTheme } from '../context/ThemeContext';
 
 const Admin: React.FC = () => {
+  const { darkMode, setDarkMode } = useTheme();
   const [requests, setRequests] = useState<QuoteRequest[]>(MOCK_QUOTE_REQUESTS);
   const [selectedRequest, setSelectedRequest] = useState<QuoteRequest | null>(null);
   const [filterStatus, setFilterStatus] = useState<string>('all');
@@ -90,6 +92,8 @@ const Admin: React.FC = () => {
           title="Quote Request Management"
           description="Track and manage all customer quote requests in one place"
           onRefresh={() => setRequests(MOCK_QUOTE_REQUESTS)}
+          darkMode={darkMode}
+          setDarkMode={setDarkMode}
         />
 
         {/* Stats Cards */}

@@ -1,13 +1,15 @@
 import React from 'react';
-import { LayoutDashboard, Home, RefreshCw, Settings, LogOut } from 'lucide-react';
+import { LayoutDashboard, Home, RefreshCw, Settings, LogOut, Sun, Moon } from 'lucide-react';
 
 interface AdminHeaderProps {
   title: string;
   description?: string;
   onRefresh?: () => void;
+  darkMode?: boolean;
+  setDarkMode?: (value: boolean) => void;
 }
 
-const AdminHeader: React.FC<AdminHeaderProps> = ({ title, description, onRefresh }) => {
+const AdminHeader: React.FC<AdminHeaderProps> = ({ title, description, onRefresh, darkMode, setDarkMode }) => {
   return (
     <div className="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 px-4 md:px-6 lg:px-8 py-3 md:py-4">
       <div className="max-w-7xl mx-auto">
@@ -37,6 +39,15 @@ const AdminHeader: React.FC<AdminHeaderProps> = ({ title, description, onRefresh
                 title="Refresh"
               >
                 <RefreshCw className="w-4 h-4" />
+              </button>
+            )}
+            {setDarkMode && (
+              <button
+                onClick={() => setDarkMode(!darkMode)}
+                className="flex items-center justify-center p-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
+                title="Toggle dark mode"
+              >
+                {darkMode ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
               </button>
             )}
             <button className="flex items-center justify-center p-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors" title="Settings">
