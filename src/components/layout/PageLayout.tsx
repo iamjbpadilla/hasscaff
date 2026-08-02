@@ -36,7 +36,7 @@ const PageLayout: React.FC<PageLayoutProps> = ({ children, breadcrumbs }) => {
         </div>
       )}
       
-      <main id="main-content" tabIndex={-1}>
+      <main id="main-content" tabIndex={-1} className="pt-20">
         {children}
       </main>
       
