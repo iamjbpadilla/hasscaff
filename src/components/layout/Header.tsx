@@ -62,6 +62,7 @@ const Header: React.FC<HeaderProps> = ({ darkMode, setDarkMode, mobileMenuOpen, 
             <NavLink to="/locations">Locations</NavLink>
             <NavLink to="/about">About</NavLink>
             <NavLink to="/contact">Contact</NavLink>
+            <NavLink to="/admin">Admin</NavLink>
           </nav>
 
           {/* Desktop CTA */}
@@ -108,6 +109,7 @@ const Header: React.FC<HeaderProps> = ({ darkMode, setDarkMode, mobileMenuOpen, 
             <NavLink to="/locations" mobile>Locations</NavLink>
             <NavLink to="/about" mobile>About</NavLink>
             <NavLink to="/contact" mobile>Contact</NavLink>
+            <NavLink to="/admin" mobile>Admin</NavLink>
             <div className="pt-3 border-t border-gray-200 dark:border-gray-700">
               <button 
                 onClick={() => setDarkMode(!darkMode)}
