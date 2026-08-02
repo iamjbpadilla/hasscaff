@@ -1,17 +1,14 @@
 import React from 'react';
-import { useTheme } from '../../context/ThemeContext';
 
 interface AdminLayoutProps {
   children: React.ReactNode;
 }
 
 const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
-  const { darkMode, setDarkMode } = useTheme();
-
   return (
     <div className="min-h-screen font-sans transition-colors duration-300 bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-white flex flex-col">
       <main className="flex-1">
-        {React.cloneElement(children as React.ReactElement, { darkMode, setDarkMode })}
+        {children}
       </main>
       <footer className="bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 py-4">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
