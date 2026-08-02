@@ -1,5 +1,5 @@
 import React from 'react';
-import { CheckCircle, ClipboardCheck, Calendar, ArrowRight } from 'lucide-react';
+import { CheckCircle, ClipboardCheck, Calendar } from 'lucide-react';
 
 const BookingProcess: React.FC = () => {
   const steps = [
@@ -24,33 +24,32 @@ const BookingProcess: React.FC = () => {
   ];
 
   return (
-    <div className="grid md:grid-cols-3 gap-8 items-start">
-      {steps.map((step, index) => (
-        <React.Fragment key={step.number}>
-          <div className="relative group">
-            <div className="border-2 rounded-2xl p-8 bg-white border-gray-200 dark:bg-gray-900 dark:border-gray-800 h-full hover:border-brand-primary hover:shadow-xl transition-all duration-300">
-              <div className="flex items-start gap-4 mb-6">
-                <div className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 bg-brand-primary text-white">
-                  <div className="w-6 h-6 flex items-center justify-center">
-                    <step.icon className="w-6 h-6" />
+    <div className="relative">
+      {/* Connection Line */}
+      <div className="hidden md:block absolute top-16 left-0 right-0 h-0.5 bg-gradient-to-r from-brand-primary/20 via-brand-primary/40 to-brand-primary/20 z-0"></div>
+      
+      <div className="grid md:grid-cols-3 gap-8 items-start relative z-10">
+        {steps.map((step) => (
+          <React.Fragment key={step.number}>
+            <div className="relative group">
+              {/* Step Number Badge */}
+              <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 w-8 h-8 rounded-full bg-brand-primary text-white flex items-center justify-center font-bold text-sm shadow-lg z-20">
+                {step.number}
+              </div>
+              
+              <div className="border-2 rounded-2xl p-8 pt-12 bg-white border-gray-200 dark:bg-gray-900 dark:border-gray-800 h-full hover:border-brand-primary hover:shadow-xl transition-all duration-300">
+                <div className="flex items-center justify-center mb-6">
+                  <div className="w-16 h-16 rounded-xl flex items-center justify-center bg-brand-primary/10 text-brand-primary group-hover:bg-brand-primary group-hover:text-white transition-all duration-300">
+                    <step.icon className="w-8 h-8" />
                   </div>
                 </div>
-                <div className="text-4xl font-bold text-gray-100 dark:text-gray-800 group-hover:text-brand-primary/20 transition-colors duration-300">
-                  {step.number}
-                </div>
+                <h3 className="text-lg font-bold mb-2 text-gray-900 dark:text-white text-center">{step.title}</h3>
+                <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed text-center">{step.description}</p>
               </div>
-              <h3 className="text-lg font-bold mb-2 text-gray-900 dark:text-white">{step.title}</h3>
-              <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">{step.description}</p>
             </div>
-          </div>
-          
-          {index < steps.length - 1 && (
-            <div className="hidden md:flex items-center justify-center text-brand-primary/30 group-hover:text-brand-primary transition-all duration-300 pt-12">
-              <ArrowRight className="w-8 h-8" />
-            </div>
-          )}
-        </React.Fragment>
-      ))}
+          </React.Fragment>
+        ))}
+      </div>
     </div>
   );
 };
