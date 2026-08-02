@@ -49,6 +49,23 @@ const DemoModal: React.FC = () => {
           </div>
 
           <div className="pt-4 border-t border-gray-200 dark:border-gray-800">
+            <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">Project Overview</h3>
+            <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
+              Digital platform renovation designed to scale organic lead generation across South East Queensland with modern UI/UX design and integrated admin management.
+            </p>
+          </div>
+
+          <div>
+            <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">Key Capabilities</h3>
+            <ul className="space-y-1 text-sm text-gray-700 dark:text-gray-300">
+              <li>• Enhanced quote request management</li>
+              <li>• Admin panel for real-time lead tracking</li>
+              <li>• Industrial-themed responsive design</li>
+              <li>• Optimized for South East QLD market</li>
+            </ul>
+          </div>
+
+          <div className="pt-4 border-t border-gray-200 dark:border-gray-800">
             <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-3">Contact</h3>
             <div className="space-y-2">
               <a
