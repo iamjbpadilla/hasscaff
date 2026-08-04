@@ -17,16 +17,16 @@ const QuoteForm: React.FC = () => {
   return (
     <div 
       id="quote"
-      className="border-2 rounded-2xl p-8 bg-white border-gray-200 shadow-xl dark:bg-gray-900 dark:border-gray-800"
+      className="border-2 rounded-2xl p-6 bg-white border-gray-200 shadow-xl dark:bg-gray-900 dark:border-gray-800"
     >
       {!formSubmitted && (
-        <div className="mb-8">
-          <div className="flex items-center gap-2 mb-3">
-            <Clock className="w-5 h-5 text-brand-primary" />
+        <div className="mb-4">
+          <div className="flex items-center gap-2 mb-2">
+            <Clock className="w-4 h-4 text-brand-primary" />
             <span className="text-sm font-semibold text-brand-primary">2-Hour Response Guaranteed</span>
           </div>
-          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white tracking-tight">Get Your Free Quote</h2>
-          <p className="text-base text-gray-600 dark:text-gray-400 mt-2 leading-relaxed">We'll call you back with a detailed quote</p>
+          <h2 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white tracking-tight">Get Your Free Quote</h2>
+          <p className="text-sm text-gray-600 dark:text-gray-400 mt-1 leading-relaxed">We'll call you back with a detailed quote</p>
         </div>
       )}
       
@@ -58,14 +58,14 @@ const QuoteForm: React.FC = () => {
         </div>
       ) : (
         <form 
-          className="space-y-6"
+          className="space-y-4"
           onSubmit={onSubmit}
         >
           <div>
-            <label htmlFor="service" className="block text-base font-semibold mb-3 text-gray-700 dark:text-gray-300">What do you need?</label>
+            <label htmlFor="service" className="block text-sm font-semibold mb-2 text-gray-700 dark:text-gray-300">What do you need?</label>
             <select 
               id="service"
-              className="w-full px-4 py-3 border-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-primary focus:border-transparent bg-white border-gray-300 text-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-white transition-all text-base"
+              className="w-full px-4 py-2.5 border-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-primary focus:border-transparent bg-white border-gray-300 text-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-white transition-all text-sm"
               name="service"
               required
               aria-required="true"
@@ -79,12 +79,12 @@ const QuoteForm: React.FC = () => {
           </div>
 
           <div>
-            <label htmlFor="location" className="block text-base font-semibold mb-3 text-gray-700 dark:text-gray-300">Where is the project?</label>
+            <label htmlFor="location" className="block text-sm font-semibold mb-2 text-gray-700 dark:text-gray-300">Where is the project?</label>
             <input 
               id="location"
               type="text" 
               placeholder="e.g. Brisbane South / 4000"
-              className="w-full px-4 py-3 border-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-primary focus:border-transparent bg-white border-gray-300 text-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-white transition-all text-base"
+              className="w-full px-4 py-2.5 border-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-primary focus:border-transparent bg-white border-gray-300 text-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-white transition-all text-sm"
               name="location"
               required
               aria-required="true"
@@ -92,12 +92,12 @@ const QuoteForm: React.FC = () => {
           </div>
 
           <div>
-            <label htmlFor="phone" className="block text-base font-semibold mb-3 text-gray-700 dark:text-gray-300">Your mobile number</label>
+            <label htmlFor="phone" className="block text-sm font-semibold mb-2 text-gray-700 dark:text-gray-300">Your mobile number</label>
             <input 
               id="phone"
               type="tel" 
               placeholder="04XX XXX XXX"
-              className="w-full px-4 py-3 border-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-primary focus:border-transparent bg-white border-gray-300 text-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-white transition-all text-base"
+              className="w-full px-4 py-2.5 border-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-primary focus:border-transparent bg-white border-gray-300 text-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-white transition-all text-sm"
               name="phone"
               required
               aria-required="true"
@@ -105,11 +105,11 @@ const QuoteForm: React.FC = () => {
           </div>
 
           <div>
-            <label className="block text-base font-semibold mb-3 text-gray-700 dark:text-gray-300">Attach plans (optional)</label>
-            <label htmlFor="plans" className="border-2 border-dashed rounded-2xl flex flex-col items-center justify-center gap-3 cursor-pointer hover:border-brand-primary hover:bg-brand-primary/5 transition-all duration-300 px-4 py-6 bg-white border-gray-300 dark:bg-gray-800 dark:border-gray-700">
-              <Upload className="w-10 h-10 text-gray-400" />
-              <span className="text-base text-gray-500 text-center">Click to upload PDF, PNG, or JPG</span>
-              <span className="text-sm text-gray-400">Max 10MB</span>
+            <label className="block text-sm font-semibold mb-2 text-gray-700 dark:text-gray-300">Attach plans (optional)</label>
+            <label htmlFor="plans" className="border-2 border-dashed rounded-2xl flex flex-col items-center justify-center gap-2 cursor-pointer hover:border-brand-primary hover:bg-brand-primary/5 transition-all duration-300 px-4 py-4 bg-white border-gray-300 dark:bg-gray-800 dark:border-gray-700">
+              <Upload className="w-8 h-8 text-gray-400" />
+              <span className="text-sm text-gray-500 text-center">Click to upload PDF, PNG, or JPG</span>
+              <span className="text-xs text-gray-400">Max 10MB</span>
               <input id="plans" type="file" name="plans" accept=".pdf,.png,.jpg,.jpeg" className="sr-only" />
             </label>
           </div>
@@ -117,7 +117,7 @@ const QuoteForm: React.FC = () => {
           <button 
             type="submit"
             disabled={isSubmitting}
-            className="w-full px-6 py-4 bg-brand-primary text-white font-bold text-lg rounded-full hover:bg-brand-secondary transition-all duration-300 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap flex items-center justify-center gap-2"
+            className="w-full px-6 py-3 bg-brand-primary text-white font-bold text-base rounded-full hover:bg-brand-secondary transition-all duration-300 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap flex items-center justify-center gap-2"
           >
             {isSubmitting ? (
               <>
@@ -129,8 +129,8 @@ const QuoteForm: React.FC = () => {
             )}
           </button>
 
-          <div className="flex items-center justify-center gap-2 text-sm text-gray-500 pt-2">
-            <ShieldCheck className="w-4 h-4" />
+          <div className="flex items-center justify-center gap-2 text-xs text-gray-500 pt-1">
+            <ShieldCheck className="w-3.5 h-3.5" />
             <span>QBCC Licensed • {COMPANY_INFO.insurance}M Insured</span>
           </div>
         </form>
