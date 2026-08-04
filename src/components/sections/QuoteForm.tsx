@@ -17,7 +17,7 @@ const QuoteForm: React.FC = () => {
   return (
     <div 
       id="quote"
-      className="border-2 rounded-3xl p-10 bg-white border-gray-200 shadow-2xl dark:bg-gray-900 dark:border-gray-800"
+      className="border-2 rounded-2xl p-8 bg-white border-gray-200 shadow-xl dark:bg-gray-900 dark:border-gray-800"
     >
       {!formSubmitted && (
         <div className="mb-8">
@@ -25,8 +25,8 @@ const QuoteForm: React.FC = () => {
             <Clock className="w-5 h-5 text-brand-primary" />
             <span className="text-sm font-semibold text-brand-primary">2-Hour Response Guaranteed</span>
           </div>
-          <h2 className="text-3xl font-bold text-gray-900 dark:text-white">Get Your Free Quote</h2>
-          <p className="text-base text-gray-600 dark:text-gray-400 mt-2">We'll call you back with a detailed quote</p>
+          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white tracking-tight">Get Your Free Quote</h2>
+          <p className="text-base text-gray-600 dark:text-gray-400 mt-2 leading-relaxed">We'll call you back with a detailed quote</p>
         </div>
       )}
       
@@ -62,10 +62,13 @@ const QuoteForm: React.FC = () => {
           onSubmit={onSubmit}
         >
           <div>
-            <label className="block text-base font-semibold mb-3 text-gray-700 dark:text-gray-300">What do you need?</label>
+            <label htmlFor="service" className="block text-base font-semibold mb-3 text-gray-700 dark:text-gray-300">What do you need?</label>
             <select 
-              className="w-full px-4 py-4 border-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-primary focus:border-transparent bg-white border-gray-300 text-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-white transition-all text-base"
+              id="service"
+              className="w-full px-4 py-3 border-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-primary focus:border-transparent bg-white border-gray-300 text-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-white transition-all text-base"
               name="service"
+              required
+              aria-required="true"
             >
               <option value="">Select a service</option>
               <option value="hang-on">Hang-On Scaffold Hire</option>
@@ -76,38 +79,45 @@ const QuoteForm: React.FC = () => {
           </div>
 
           <div>
-            <label className="block text-base font-semibold mb-3 text-gray-700 dark:text-gray-300">Where is the project?</label>
+            <label htmlFor="location" className="block text-base font-semibold mb-3 text-gray-700 dark:text-gray-300">Where is the project?</label>
             <input 
+              id="location"
               type="text" 
               placeholder="e.g. Brisbane South / 4000"
-              className="w-full px-4 py-4 border-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-primary focus:border-transparent bg-white border-gray-300 text-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-white transition-all text-base"
+              className="w-full px-4 py-3 border-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-primary focus:border-transparent bg-white border-gray-300 text-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-white transition-all text-base"
               name="location"
+              required
+              aria-required="true"
             />
           </div>
 
           <div>
-            <label className="block text-base font-semibold mb-3 text-gray-700 dark:text-gray-300">Your mobile number</label>
+            <label htmlFor="phone" className="block text-base font-semibold mb-3 text-gray-700 dark:text-gray-300">Your mobile number</label>
             <input 
+              id="phone"
               type="tel" 
               placeholder="04XX XXX XXX"
-              className="w-full px-4 py-4 border-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-primary focus:border-transparent bg-white border-gray-300 text-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-white transition-all text-base"
+              className="w-full px-4 py-3 border-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-primary focus:border-transparent bg-white border-gray-300 text-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-white transition-all text-base"
               name="phone"
+              required
+              aria-required="true"
             />
           </div>
 
           <div>
             <label className="block text-base font-semibold mb-3 text-gray-700 dark:text-gray-300">Attach plans (optional)</label>
-            <div className="border-2 border-dashed rounded-2xl flex flex-col items-center justify-center gap-3 cursor-pointer hover:border-brand-primary hover:bg-brand-primary/5 transition-all duration-300 px-4 py-8 bg-white border-gray-300 dark:bg-gray-800 dark:border-gray-700">
+            <label htmlFor="plans" className="border-2 border-dashed rounded-2xl flex flex-col items-center justify-center gap-3 cursor-pointer hover:border-brand-primary hover:bg-brand-primary/5 transition-all duration-300 px-4 py-6 bg-white border-gray-300 dark:bg-gray-800 dark:border-gray-700">
               <Upload className="w-10 h-10 text-gray-400" />
               <span className="text-base text-gray-500 text-center">Click to upload PDF, PNG, or JPG</span>
               <span className="text-sm text-gray-400">Max 10MB</span>
-            </div>
+              <input id="plans" type="file" name="plans" accept=".pdf,.png,.jpg,.jpeg" className="sr-only" />
+            </label>
           </div>
 
           <button 
             type="submit"
             disabled={isSubmitting}
-            className="w-full px-6 py-4 bg-brand-primary text-white font-bold text-lg rounded-full hover:bg-brand-secondary transition-all duration-300 shadow-xl hover:shadow-2xl disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap flex items-center justify-center gap-2"
+            className="w-full px-6 py-4 bg-brand-primary text-white font-bold text-lg rounded-full hover:bg-brand-secondary transition-all duration-300 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap flex items-center justify-center gap-2"
           >
             {isSubmitting ? (
               <>

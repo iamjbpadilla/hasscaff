@@ -47,7 +47,7 @@ const HangOnSystems: React.FC = () => {
         />
 
         {/* Image Placeholder */}
-        <section className="py-12">
+        <section className="py-8 md:py-12">
           <div className="max-w-7xl mx-auto px-6 lg:px-8">
             <div className="aspect-video bg-gray-200 dark:bg-gray-800 rounded-2xl flex items-center justify-center">
               <span className="text-gray-500 dark:text-gray-400">Hang-On Scaffold Gallery Placeholder</span>
@@ -56,11 +56,11 @@ const HangOnSystems: React.FC = () => {
         </section>
 
         {/* Features */}
-        <section className="py-24 bg-white dark:bg-brand-dark bg-pattern-grid">
+        <section className="py-16 md:py-24 bg-white dark:bg-brand-dark bg-pattern-grid">
           <div className="max-w-7xl mx-auto px-6 lg:px-8">
-            <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900 dark:text-white">Why Choose Our Hang-On Systems</h2>
-              <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+            <div className="text-center mb-12 md:mb-16">
+              <h2 className="text-3xl md:text-4xl font-bold mb-4 tracking-tight text-gray-900 dark:text-white">Why Choose Our Hang-On Systems</h2>
+              <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto leading-relaxed">
                 Designed for efficiency without compromising on safety
               </p>
             </div>
@@ -106,11 +106,11 @@ const HangOnSystems: React.FC = () => {
         </section>
 
         {/* Technical Specs */}
-        <section className="py-24 bg-gray-50 dark:bg-gray-900/50 bg-pattern-dots">
+        <section className="py-16 md:py-24 bg-gray-50 dark:bg-gray-900/50 bg-pattern-dots">
           <div className="max-w-7xl mx-auto px-6 lg:px-8">
-            <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900 dark:text-white">Technical Specifications</h2>
-              <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+            <div className="text-center mb-12 md:mb-16">
+              <h2 className="text-3xl md:text-4xl font-bold mb-4 tracking-tight text-gray-900 dark:text-white">Technical Specifications</h2>
+              <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto leading-relaxed">
                 Built to perform, engineered to last
               </p>
             </div>
@@ -162,10 +162,10 @@ const HangOnSystems: React.FC = () => {
         </section>
 
         {/* CTA */}
-        <section className="py-24 bg-white dark:bg-brand-dark bg-pattern-diagonal">
+        <section className="py-16 md:py-24 bg-white dark:bg-brand-dark bg-pattern-diagonal">
           <div className="max-w-7xl mx-auto px-6 lg:px-8 text-center">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900 dark:text-white">Ready to Get Started?</h2>
-            <p className="text-lg text-gray-600 dark:text-gray-400 mb-8 max-w-2xl mx-auto">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 tracking-tight text-gray-900 dark:text-white">Ready to Get Started?</h2>
+            <p className="text-lg text-gray-600 dark:text-gray-400 mb-8 max-w-2xl mx-auto leading-relaxed">
               Contact us for a free quote on your hang-on scaffolding requirements. We respond within 2 hours.
             </p>
             <a 

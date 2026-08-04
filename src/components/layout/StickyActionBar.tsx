@@ -4,7 +4,7 @@ import { COMPANY_INFO } from '../../lib/constants';
 
 const StickyActionBar: React.FC = () => {
   return (
-    <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 border-t-2 border-brand-primary p-2 bg-gray-100 dark:bg-gray-900">
+    <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 border-t-2 border-brand-primary p-2 pb-[env(safe-area-inset-bottom)] bg-gray-100 dark:bg-gray-900 shadow-lg">
       <div className="flex gap-2">
         <a
           href={`tel:${COMPANY_INFO.phone.replace(/\s/g, '')}`}

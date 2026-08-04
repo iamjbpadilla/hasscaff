@@ -1,4 +1,4 @@
-import PageLayout from '../components/layout/PageLayout';
+﻿import PageLayout from '../components/layout/PageLayout';
 import PageHeader from '../components/layout/PageHeader';
 import { COMPANY_INFO, COMPLIANCE_INFO } from '../lib/constants';
 import { Phone, MapPin, Mail, Clock, ShieldCheck } from 'lucide-react';
@@ -38,7 +38,7 @@ const Contact: React.FC = () => {
         />
 
         {/* Contact Cards */}
-        <section className="py-24 bg-white dark:bg-brand-dark bg-pattern-grid">
+        <section className="py-16 md:py-24 bg-white dark:bg-brand-dark bg-pattern-grid">
           <div className="max-w-7xl mx-auto px-6 lg:px-8">
             <div className="grid md:grid-cols-3 gap-6">
               <div className="border-2 rounded-2xl p-8 text-center bg-white border-gray-200 dark:bg-gray-900 dark:border-gray-800 hover:border-brand-primary hover:shadow-xl transition-all duration-300">
@@ -90,7 +90,7 @@ const Contact: React.FC = () => {
         </section>
 
         {/* Compliance & Emergency */}
-        <section className="py-24 bg-gray-50 dark:bg-gray-900/50 bg-pattern-dots">
+        <section className="py-16 md:py-24 bg-gray-50 dark:bg-gray-900/50 bg-pattern-dots">
           <div className="max-w-7xl mx-auto px-6 lg:px-8">
             <div className="grid md:grid-cols-2 gap-6">
               <div className="border-2 rounded-2xl p-8 bg-white border-gray-200 dark:bg-gray-900 dark:border-gray-800">

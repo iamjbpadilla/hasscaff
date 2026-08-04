@@ -21,11 +21,11 @@ const RootedValues: React.FC = () => {
   ];
 
   return (
-    <section className="py-24 bg-white dark:bg-brand-dark">
+    <section className="py-16 md:py-24 bg-white dark:bg-brand-dark">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900 dark:text-white">Values That Guide Everything We Do</h2>
-          <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+        <div className="text-center mb-12 md:mb-16">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 tracking-tight text-gray-900 dark:text-white">Values That Guide Everything We Do</h2>
+          <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto leading-relaxed">
             These aren't just words on a wall — they're the principles we live by every day on every job site
           </p>
         </div>

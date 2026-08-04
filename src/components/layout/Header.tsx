@@ -57,7 +57,7 @@ const Header: React.FC<HeaderProps> = ({ darkMode, setDarkMode, mobileMenuOpen, 
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center space-x-10">
+          <nav className="hidden md:flex items-center space-x-10">
             <NavLink to="/services">Services</NavLink>
             <NavLink to="/locations">Locations</NavLink>
             <NavLink to="/about">About</NavLink>

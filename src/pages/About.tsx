@@ -34,11 +34,11 @@ const About: React.FC = () => {
         />
         
         {/* Our Story */}
-        <section className="py-24 bg-white dark:bg-brand-dark">
+        <section className="py-16 md:py-24 bg-white dark:bg-brand-dark">
           <div className="max-w-7xl mx-auto px-6 lg:px-8">
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <div>
-                <h2 className="text-3xl md:text-4xl font-bold mb-6 text-gray-900 dark:text-white">Our Story</h2>
+                <h2 className="text-3xl md:text-4xl font-bold mb-4 tracking-tight text-gray-900 dark:text-white">Our Story</h2>
                 <p className="text-lg text-gray-600 dark:text-gray-400 mb-4 leading-relaxed">
                   With over 15 years of experience in the scaffolding industry, {COMPANY_INFO.name} has established itself as a trusted provider of professional scaffolding solutions across Brisbane, Gold Coast, and Sunshine Coast.
                 </p>
@@ -54,11 +54,11 @@ const About: React.FC = () => {
         </section>
 
         {/* Our Commitment */}
-        <section className="py-24 bg-gray-50 dark:bg-gray-900/50 bg-pattern-dots">
+        <section className="py-16 md:py-24 bg-gray-50 dark:bg-gray-900/50 bg-pattern-dots">
           <div className="max-w-7xl mx-auto px-6 lg:px-8">
-            <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900 dark:text-white">Our Commitment</h2>
-              <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+            <div className="text-center mb-12 md:mb-16">
+              <h2 className="text-3xl md:text-4xl font-bold mb-4 tracking-tight text-gray-900 dark:text-white">Our Commitment</h2>
+              <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto leading-relaxed">
                 We are committed to providing the highest quality scaffolding services with a focus on safety, reliability, and customer satisfaction.
               </p>
             </div>
@@ -82,10 +82,10 @@ const About: React.FC = () => {
         <RootedValues />
 
         {/* CTA */}
-        <section className="py-24 bg-white dark:bg-brand-dark">
+        <section className="py-16 md:py-24 bg-white dark:bg-brand-dark">
           <div className="max-w-7xl mx-auto px-6 lg:px-8 text-center">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900 dark:text-white">Ready to Work With Us?</h2>
-            <p className="text-lg text-gray-600 dark:text-gray-400 mb-8 max-w-2xl mx-auto">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 tracking-tight text-gray-900 dark:text-white">Ready to Work With Us?</h2>
+            <p className="text-lg text-gray-600 dark:text-gray-400 mb-8 max-w-2xl mx-auto leading-relaxed">
               Contact us for a free quote on your scaffolding requirements. We respond within 2 hours.
             </p>
             <a 
