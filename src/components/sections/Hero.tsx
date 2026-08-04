@@ -41,7 +41,7 @@ const Hero: React.FC = () => {
 
             {/* Headline */}
             <motion.h1 variants={item} className="text-3xl sm:text-5xl lg:text-6xl font-display font-extrabold leading-[1.15] tracking-tight text-gray-900 dark:text-white">
-              Safe Scaffolding Hire
+              Scaffolding Hire Built for Safety & Speed
             </motion.h1>
             
             {/* Subtext */}
