@@ -1,4 +1,5 @@
 import React, { useMemo, useState } from 'react';
+import { motion } from 'framer-motion';
 import AdminLayout from '../components/layout/AdminLayout';
 import AdminHeader from '../components/layout/AdminHeader';
 import SEO from '../components/common/SEO';
@@ -37,6 +38,7 @@ import {
   Users,
   TrendingUp,
   AlertCircle,
+  PieChart,
 } from 'lucide-react';
 
 type SortBy = 'createdAt' | 'updatedAt' | 'status';
@@ -49,6 +51,16 @@ interface ToastMsg {
   message: string;
   onUndo?: () => void;
 }
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 16 },
+  visible: { opacity: 1, y: 0 },
+};
+
+const barVariants = {
+  hidden: { width: '0%' },
+  visible: (value: number) => ({ width: `${value}%` }),
+};
 
 const StatusBadge: React.FC<{ status: QuoteRequest['status'] }> = ({ status }) => (
   <span
@@ -117,6 +129,15 @@ const Admin: React.FC = () => {
     });
     return Object.entries(counts).sort((a, b) => b[1] - a[1]).slice(0, 8);
   }, [requests]);
+
+  const statusBreakdown = useMemo(
+    () =>
+      (['pending', 'contacted', 'quoted', 'completed'] as QuoteRequest['status'][]).map((status) => ({
+        status,
+        count: requests.filter((r) => r.status === status).length,
+      })),
+    [requests]
+  );
 
   const recentRequests = useMemo(
     () => [...requests].sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()).slice(0, 5),
@@ -236,32 +257,6 @@ const Admin: React.FC = () => {
     return sortDir === 'asc' ? <ArrowUp className="w-4 h-4 text-brand-primary" /> : <ArrowDown className="w-4 h-4 text-brand-primary" />;
   };
 
-  const StatCard = ({
-    label,
-    value,
-    status,
-  }: {
-    label: string;
-    value: number;
-    status: string;
-  }) => (
-    <button
-      onClick={() => {
-        setView('requests');
-        setFilterStatus(status);
-        setSelectedId(null);
-      }}
-      className={`relative p-4 rounded-2xl border-2 text-left transition-all overflow-hidden ${
-        filterStatus === status && view === 'requests'
-          ? 'border-brand-primary bg-brand-primary/5 dark:bg-brand-primary/10'
-          : 'border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 hover:border-brand-primary/50'
-      }`}
-    >
-      <p className="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">{label}</p>
-      <p className="text-2xl font-bold mt-1 text-gray-900 dark:text-white">{value}</p>
-    </button>
-  );
-
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTableSectionElement>) => {
     if (!filteredRequests.length) return;
     const idx = filteredRequests.findIndex((r) => r.id === selectedId);
@@ -303,7 +298,7 @@ const Admin: React.FC = () => {
           setDarkMode={setDarkMode}
         />
         <div className="bg-gray-50 dark:bg-gray-950 min-h-[calc(100vh-64px)]">
-          <div className="max-w-7xl mx-auto px-4 md:px-8 py-6">
+          <div className="w-full px-4 md:px-8 py-6">
             <nav className="flex items-center gap-2 mb-6 border-2 border-gray-200 dark:border-gray-800 p-1.5 rounded-2xl bg-white dark:bg-gray-900 w-fit">
               {navItems.map((item) => (
                 <button
@@ -320,51 +315,56 @@ const Admin: React.FC = () => {
               ))}
             </nav>
 
-            {view === 'overview' ? (
-              <OverviewTab
-                stats={stats}
-                serviceBreakdown={serviceBreakdown}
-                locationBreakdown={locationBreakdown}
-                recentRequests={recentRequests}
-                pendingQueue={pendingQueue}
-                onSwitchToRequests={(status) => {
-                  setView('requests');
-                  setFilterStatus(status);
-                  setSelectedId(null);
-                }}
-                onExport={() => exportCSV()}
-                onRefresh={() => {
-                  setRequests(MOCK_QUOTE_REQUESTS);
-                  setSelectedId(null);
-                }}
-              />
-            ) : (
-              <RequestsTab
-                filteredRequests={filteredRequests}
-                stats={stats}
-                selectedRequest={selectedRequest}
-                selectedIds={selectedIds}
-                allSelected={allSelected}
-                searchTerm={searchTerm}
-                filterStatus={filterStatus}
-                sortBy={sortBy}
-                sortDir={sortDir}
-                setSearchTerm={setSearchTerm}
-                setFilterStatus={setFilterStatus}
-                setSelectedId={setSelectedId}
-                toggleSelect={toggleSelect}
-                toggleSelectAll={toggleSelectAll}
-                handleSort={handleSort}
-                handleKeyDown={handleKeyDown}
-                exportCSV={exportCSV}
-                doBulkDelete={doBulkDelete}
-                bulkStatus={bulkStatus}
-                updateStatus={updateStatus}
-                saveNote={saveNote}
-                doDelete={doDelete}
-                SortIcon={SortIcon}
-              />
-            )}
+            <motion.div
+              key={view}
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.25 }}
+            >
+              {view === 'overview' ? (
+                <OverviewTab
+                  stats={stats}
+                  serviceBreakdown={serviceBreakdown}
+                  locationBreakdown={locationBreakdown}
+                  statusBreakdown={statusBreakdown}
+                  recentRequests={recentRequests}
+                  pendingQueue={pendingQueue}
+                  onSwitchToRequests={(status) => {
+                    setView('requests');
+                    setFilterStatus(status);
+                    setSelectedId(null);
+                  }}
+                  onExport={() => exportCSV()}
+                  onRefresh={() => {
+                    setRequests(MOCK_QUOTE_REQUESTS);
+                    setSelectedId(null);
+                  }}
+                />
+              ) : (
+                <RequestsTab
+                  filteredRequests={filteredRequests}
+                  selectedRequest={selectedRequest}
+                  selectedIds={selectedIds}
+                  allSelected={allSelected}
+                  searchTerm={searchTerm}
+                  filterStatus={filterStatus}
+                  setSearchTerm={setSearchTerm}
+                  setFilterStatus={setFilterStatus}
+                  setSelectedId={setSelectedId}
+                  toggleSelect={toggleSelect}
+                  toggleSelectAll={toggleSelectAll}
+                  handleSort={handleSort}
+                  handleKeyDown={handleKeyDown}
+                  exportCSV={exportCSV}
+                  doBulkDelete={doBulkDelete}
+                  bulkStatus={bulkStatus}
+                  updateStatus={updateStatus}
+                  saveNote={saveNote}
+                  doDelete={doDelete}
+                  SortIcon={SortIcon}
+                />
+              )}
+            </motion.div>
           </div>
         </div>
       </AdminLayout>
@@ -401,12 +401,23 @@ const OverviewTab: React.FC<{
   stats: { total: number; pending: number; contacted: number; quoted: number; completed: number };
   serviceBreakdown: [string, number][];
   locationBreakdown: [string, number][];
+  statusBreakdown: { status: QuoteRequest['status']; count: number }[];
   recentRequests: QuoteRequest[];
   pendingQueue: QuoteRequest[];
   onSwitchToRequests: (status: string) => void;
   onExport: () => void;
   onRefresh: () => void;
-}> = ({ stats, serviceBreakdown, locationBreakdown, recentRequests, pendingQueue, onSwitchToRequests, onExport, onRefresh }) => {
+}> = ({
+  stats,
+  serviceBreakdown,
+  locationBreakdown,
+  statusBreakdown,
+  recentRequests,
+  pendingQueue,
+  onSwitchToRequests,
+  onExport,
+  onRefresh,
+}) => {
   const statList = [
     { label: 'Total', value: stats.total, icon: <Users className="w-5 h-5" />, status: 'all' },
     { label: 'Pending', value: stats.pending, icon: <AlertCircle className="w-5 h-5" />, status: 'pending' },
@@ -423,104 +434,117 @@ const OverviewTab: React.FC<{
 
   const maxService = serviceBreakdown.reduce((m, [, c]) => Math.max(m, c), 0) || 1;
   const maxLocation = locationBreakdown.reduce((m, [, c]) => Math.max(m, c), 0) || 1;
+  const maxStatus = Math.max(...statusBreakdown.map((s) => s.count), 1);
 
   return (
     <div className="space-y-6">
-      <div>
+      <section>
         <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Overview</h2>
         <p className="text-sm text-gray-600 dark:text-gray-400">Real-time dashboard for quotes, enquiries and team activity.</p>
-      </div>
+      </section>
 
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        {statList.map((s) => (
-          <button
+      <section className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        {statList.map((s, i) => (
+          <motion.button
             key={s.status}
+            variants={cardVariants}
+            initial="hidden"
+            animate="visible"
+            transition={{ duration: 0.3, delay: i * 0.05 }}
             onClick={() => onSwitchToRequests(s.status)}
-            className="flex items-center gap-4 p-4 rounded-2xl border-2 border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 hover:border-brand-primary/50 transition-all text-left"
+            className="flex items-center gap-4 p-4 rounded-2xl border-2 border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 hover:border-brand-primary/50 transition-colors text-left"
           >
             <div className="w-10 h-10 rounded-xl bg-brand-primary/10 flex items-center justify-center text-brand-primary">{s.icon}</div>
             <div>
               <p className="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">{s.label}</p>
               <p className="text-2xl font-bold text-gray-900 dark:text-white">{s.value}</p>
             </div>
-          </button>
+          </motion.button>
         ))}
-      </div>
+      </section>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        {quickActions.map((a, i) => (
-          <React.Fragment key={i}>
-            {a.href ? (
-              <a
-                href={a.href}
-                className="flex items-center gap-3 p-4 rounded-2xl border-2 border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 hover:border-brand-primary transition-all"
-              >
-                <div className="w-10 h-10 rounded-xl bg-brand-primary/10 flex items-center justify-center text-brand-primary">{a.icon}</div>
-                <span className="font-bold text-gray-900 dark:text-white">{a.label}</span>
-              </a>
-            ) : (
-              <button
-                onClick={a.onClick}
-                className="flex items-center gap-3 p-4 rounded-2xl border-2 border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 hover:border-brand-primary transition-all text-left"
-              >
-                <div className="w-10 h-10 rounded-xl bg-brand-primary/10 flex items-center justify-center text-brand-primary">{a.icon}</div>
-                <span className="font-bold text-gray-900 dark:text-white">{a.label}</span>
-              </button>
-            )}
-          </React.Fragment>
-        ))}
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="bg-white dark:bg-gray-900 border-2 border-gray-200 dark:border-gray-800 rounded-2xl p-6">
-          <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
-            <Building2 className="w-5 h-5 text-brand-primary" />
-            Service Breakdown
-          </h3>
-          <div className="space-y-3">
-            {serviceBreakdown.map(([service, count]) => (
+      <section className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <ChartCard title="Service Demand" icon={<Building2 className="w-5 h-5 text-brand-primary" />}>
+          <div className="space-y-4">
+            {serviceBreakdown.map(([service, count], i) => (
               <div key={service}>
                 <div className="flex items-center justify-between text-sm mb-1">
                   <span className="font-medium text-gray-900 dark:text-white">{service}</span>
                   <span className="font-bold text-gray-500 dark:text-gray-400">{count}</span>
                 </div>
-                <div className="h-2 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
-                  <div
+                <div className="h-3 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
+                  <motion.div
                     className="h-full bg-brand-primary rounded-full"
-                    style={{ width: `${(count / maxService) * 100}%` }}
+                    variants={barVariants}
+                    initial="hidden"
+                    animate="visible"
+                    custom={(count / maxService) * 100}
+                    transition={{ duration: 0.7, delay: 0.1 + i * 0.05 }}
                   />
                 </div>
               </div>
             ))}
           </div>
-        </div>
+        </ChartCard>
 
-        <div className="bg-white dark:bg-gray-900 border-2 border-gray-200 dark:border-gray-800 rounded-2xl p-6">
-          <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
-            <MapPin className="w-5 h-5 text-brand-primary" />
-            Top Locations
-          </h3>
-          <div className="space-y-3">
-            {locationBreakdown.map(([loc, count]) => (
+        <ChartCard title="Location Spread" icon={<MapPin className="w-5 h-5 text-brand-primary" />}>
+          <div className="space-y-4">
+            {locationBreakdown.map(([loc, count], i) => (
               <div key={loc}>
                 <div className="flex items-center justify-between text-sm mb-1">
                   <span className="font-medium text-gray-900 dark:text-white">{loc}</span>
                   <span className="font-bold text-gray-500 dark:text-gray-400">{count}</span>
                 </div>
-                <div className="h-2 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
-                  <div
+                <div className="h-3 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
+                  <motion.div
                     className="h-full bg-brand-primary rounded-full"
-                    style={{ width: `${(count / maxLocation) * 100}%` }}
+                    variants={barVariants}
+                    initial="hidden"
+                    animate="visible"
+                    custom={(count / maxLocation) * 100}
+                    transition={{ duration: 0.7, delay: 0.1 + i * 0.05 }}
                   />
                 </div>
               </div>
             ))}
           </div>
-        </div>
-      </div>
+        </ChartCard>
+      </section>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2 bg-white dark:bg-gray-900 border-2 border-gray-200 dark:border-gray-800 rounded-2xl p-6 overflow-hidden">
+      <section className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <ChartCard title="Quote Funnel" icon={<PieChart className="w-5 h-5 text-brand-primary" />} className="lg:col-span-1">
+          <div className="space-y-4">
+            {statusBreakdown.map(({ status, count }, i) => {
+              const pct = (count / maxStatus) * 100;
+              return (
+                <div key={status}>
+                  <div className="flex items-center justify-between text-sm mb-1">
+                    <span className="font-medium text-gray-900 dark:text-white">{STATUS_LABELS[status]}</span>
+                    <span className="font-bold text-gray-500 dark:text-gray-400">{count}</span>
+                  </div>
+                  <div className="h-3 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
+                    <motion.div
+                      className={`h-full rounded-full ${STATUS_COLORS[status].split(' ').pop()}`}
+                      variants={barVariants}
+                      initial="hidden"
+                      animate="visible"
+                      custom={pct}
+                      transition={{ duration: 0.7, delay: 0.1 + i * 0.05 }}
+                    />
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </ChartCard>
+
+        <motion.div
+          variants={cardVariants}
+          initial="hidden"
+          animate="visible"
+          transition={{ duration: 0.3, delay: 0.2 }}
+          className="lg:col-span-2 bg-white dark:bg-gray-900 border-2 border-gray-200 dark:border-gray-800 rounded-2xl p-6"
+        >
           <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
             <Calendar className="w-5 h-5 text-brand-primary" />
             Recent Enquiries
@@ -547,9 +571,17 @@ const OverviewTab: React.FC<{
               </tbody>
             </table>
           </div>
-        </div>
+        </motion.div>
+      </section>
 
-        <div className="bg-white dark:bg-gray-900 border-2 border-gray-200 dark:border-gray-800 rounded-2xl p-6">
+      <section className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <motion.div
+          variants={cardVariants}
+          initial="hidden"
+          animate="visible"
+          transition={{ duration: 0.3, delay: 0.25 }}
+          className="bg-white dark:bg-gray-900 border-2 border-gray-200 dark:border-gray-800 rounded-2xl p-6"
+        >
           <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
             <AlertCircle className="w-5 h-5 text-brand-primary" />
             Pending Queue
@@ -569,22 +601,73 @@ const OverviewTab: React.FC<{
           ) : (
             <p className="text-sm text-gray-500 dark:text-gray-400">No pending requests. Great job.</p>
           )}
-        </div>
-      </div>
+        </motion.div>
+
+        <motion.div
+          variants={cardVariants}
+          initial="hidden"
+          animate="visible"
+          transition={{ duration: 0.3, delay: 0.3 }}
+          className="bg-white dark:bg-gray-900 border-2 border-gray-200 dark:border-gray-800 rounded-2xl p-6"
+        >
+          <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">Quick Actions</h3>
+          <div className="grid grid-cols-2 gap-4">
+            {quickActions.map((a, i) => (
+              <React.Fragment key={i}>
+                {a.href ? (
+                  <a
+                    href={a.href}
+                    className="flex items-center gap-3 p-4 rounded-xl border-2 border-gray-200 dark:border-gray-800 hover:border-brand-primary transition-colors"
+                  >
+                    <div className="w-10 h-10 rounded-xl bg-brand-primary/10 flex items-center justify-center text-brand-primary">{a.icon}</div>
+                    <span className="font-bold text-gray-900 dark:text-white">{a.label}</span>
+                  </a>
+                ) : (
+                  <button
+                    onClick={a.onClick}
+                    className="flex items-center gap-3 p-4 rounded-xl border-2 border-gray-200 dark:border-gray-800 hover:border-brand-primary transition-colors text-left"
+                  >
+                    <div className="w-10 h-10 rounded-xl bg-brand-primary/10 flex items-center justify-center text-brand-primary">{a.icon}</div>
+                    <span className="font-bold text-gray-900 dark:text-white">{a.label}</span>
+                  </button>
+                )}
+              </React.Fragment>
+            ))}
+          </div>
+        </motion.div>
+      </section>
     </div>
   );
 };
 
+const ChartCard: React.FC<{ title: string; icon: React.ReactNode; children: React.ReactNode; className?: string }> = ({
+  title,
+  icon,
+  children,
+  className = '',
+}) => (
+  <motion.div
+    variants={cardVariants}
+    initial="hidden"
+    animate="visible"
+    transition={{ duration: 0.3 }}
+    className={`bg-white dark:bg-gray-900 border-2 border-gray-200 dark:border-gray-800 rounded-2xl p-6 ${className}`}
+  >
+    <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+      {icon}
+      {title}
+    </h3>
+    {children}
+  </motion.div>
+);
+
 const RequestsTab: React.FC<{
   filteredRequests: QuoteRequest[];
-  stats: { total: number; pending: number; contacted: number; quoted: number; completed: number };
   selectedRequest: QuoteRequest | null;
   selectedIds: Set<string>;
   allSelected: boolean;
   searchTerm: string;
   filterStatus: string;
-  sortBy: SortBy;
-  sortDir: SortDir;
   setSearchTerm: (s: string) => void;
   setFilterStatus: (s: string) => void;
   setSelectedId: (id: string | null) => void;
@@ -601,7 +684,6 @@ const RequestsTab: React.FC<{
   SortIcon: React.FC<{ field: SortBy }>;
 }> = ({
   filteredRequests,
-  stats,
   selectedRequest,
   selectedIds,
   allSelected,
@@ -626,13 +708,6 @@ const RequestsTab: React.FC<{
     <div>
       <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Requests</h2>
       <p className="text-sm text-gray-600 dark:text-gray-400">Select a request to view, edit, and manage customer enquiries.</p>
-    </div>
-
-    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-      <StatCard stats={stats} status="all" setFilterStatus={setFilterStatus} />
-      <StatCard stats={stats} status="pending" setFilterStatus={setFilterStatus} />
-      <StatCard stats={stats} status="quoted" setFilterStatus={setFilterStatus} />
-      <StatCard stats={stats} status="completed" setFilterStatus={setFilterStatus} />
     </div>
 
     <div className="flex flex-col lg:flex-row gap-4 lg:items-center lg:justify-between">
@@ -792,33 +867,6 @@ const RequestsTab: React.FC<{
     </div>
   </div>
 );
-
-const StatCard = ({
-  stats,
-  status,
-  setFilterStatus,
-}: {
-  stats: { total: number; pending: number; contacted: number; quoted: number; completed: number };
-  status: string;
-  setFilterStatus: (s: string) => void;
-}) => {
-  const map: Record<string, { label: string; value: number }> = {
-    all: { label: 'Total', value: stats.total },
-    pending: { label: 'Pending', value: stats.pending },
-    quoted: { label: 'Quoted', value: stats.quoted },
-    completed: { label: 'Completed', value: stats.completed },
-  };
-  const { label, value } = map[status];
-  return (
-    <button
-      onClick={() => setFilterStatus(status)}
-      className="p-4 rounded-2xl border-2 border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 hover:border-brand-primary/50 transition-all text-left w-full"
-    >
-      <p className="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">{label}</p>
-      <p className="text-2xl font-bold mt-1 text-gray-900 dark:text-white">{value}</p>
-    </button>
-  );
-};
 
 const DetailPanel: React.FC<{
   request: QuoteRequest;
