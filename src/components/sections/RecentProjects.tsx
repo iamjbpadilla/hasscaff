@@ -1,13 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { MapPin, ArrowRight } from 'lucide-react';
+import { MapPin, ArrowRight, Building2, Home } from 'lucide-react';
 import { locations } from '../../data/locations';
 
 const projects = [
-  { title: 'CBD Commercial Fit-Out', location: 'Brisbane CBD', type: 'Commercial', date: 'June 2026', image: 'https://picsum.photos/seed/cbd-commercial/800/450' },
-  { title: 'Coastal Home Renovation', location: 'Mooloolaba', type: 'Residential', date: 'May 2026', image: 'https://picsum.photos/seed/coastal-home/800/450' },
-  { title: 'High-Rise Apartment Access', location: 'Surfers Paradise', type: 'Commercial', date: 'April 2026', image: 'https://picsum.photos/seed/high-rise/800/450' },
-  { title: 'Heritage Roof Restoration', location: 'Paddington', type: 'Residential', date: 'March 2026', image: 'https://picsum.photos/seed/heritage-roof/800/450' },
+  { title: 'CBD Commercial Fit-Out', location: 'Brisbane CBD', type: 'Commercial', date: 'June 2026' },
+  { title: 'Coastal Home Renovation', location: 'Mooloolaba', type: 'Residential', date: 'May 2026' },
+  { title: 'High-Rise Apartment Access', location: 'Surfers Paradise', type: 'Commercial', date: 'April 2026' },
+  { title: 'Heritage Roof Restoration', location: 'Paddington', type: 'Residential', date: 'March 2026' },
 ];
 
 const RecentProjects: React.FC = () => {
@@ -36,13 +36,12 @@ const RecentProjects: React.FC = () => {
               key={index}
               className="group border-2 rounded-2xl overflow-hidden bg-white border-gray-200 dark:bg-gray-900 dark:border-gray-800 hover:border-brand-primary transition-all duration-300"
             >
-              <div className="aspect-video bg-[#1E242B] border border-[#28323C] relative overflow-hidden">
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  loading="lazy"
-                  className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-300"
-                />
+              <div className="h-32 bg-[#1E242B] border-b border-[#28323C] flex items-center justify-center relative">
+                {project.type === 'Commercial' ? (
+                  <Building2 className="w-12 h-12 text-brand-primary" />
+                ) : (
+                  <Home className="w-12 h-12 text-brand-primary" />
+                )}
                 <div className="absolute top-4 left-4 px-3 py-1 bg-white/90 dark:bg-gray-900/90 rounded-full text-xs font-bold text-brand-primary font-mono">
                   {project.type}
                 </div>

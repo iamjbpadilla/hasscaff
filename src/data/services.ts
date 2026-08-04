@@ -1,4 +1,4 @@
-import { LucideIcon, Wrench, Users, Building2, Home, ShieldCheck, Clock, Award, Check } from 'lucide-react';
+import { LucideIcon, Wrench, Users, Building2, Home, ShieldCheck, Clock, Award } from 'lucide-react';
 
 export interface ServiceExtraBlock {
   title: string;
@@ -24,7 +24,6 @@ export interface ServiceData {
   shortDescription: string;
   description: string;
   icon: LucideIcon;
-  image: string;
   badge: { text: string; icon: LucideIcon };
   galleryLabel: string;
   featuresTitle: string;
@@ -48,7 +47,6 @@ export const services: ServiceData[] = [
     shortDescription: 'Rapid deployment for residential & commercial projects. Up to 450kg/m² capacity.',
     description: 'Efficient, cost-effective hang-on scaffolding solutions for residential and commercial projects across South East Queensland.',
     icon: Wrench,
-    image: 'https://picsum.photos/seed/hang-on/800/450',
     badge: { text: 'Efficient & Cost-Effective', icon: Wrench },
     galleryLabel: 'Hang-On Scaffold Gallery Placeholder',
     featuresTitle: 'Why Choose Our Hang-On Systems',
@@ -89,7 +87,6 @@ export const services: ServiceData[] = [
     shortDescription: 'Certified scaffolders available 24/7. QBCC certified crews for every stage.',
     description: 'Get skilled scaffolding professionals for your project. Our certified team ensures safe, efficient installation and dismantling.',
     icon: Users,
-    image: 'https://picsum.photos/seed/labour-hire/800/450',
     badge: { text: 'Certified Professionals', icon: Users },
     galleryLabel: 'Scaffold Labour Team Gallery Placeholder',
     featuresTitle: 'Why Choose Our Labour Hire',
@@ -125,7 +122,6 @@ export const services: ServiceData[] = [
     shortDescription: 'Heavy-duty engineered solutions for large-scale commercial projects.',
     description: 'Complete scaffolding solutions for commercial construction, maintenance, and industrial projects. Engineered systems with full project management.',
     icon: Building2,
-    image: 'https://picsum.photos/seed/commercial/800/450',
     badge: { text: 'Full-Service Solutions', icon: Building2 },
     galleryLabel: 'Commercial Scaffolding Gallery Placeholder',
     featuresTitle: 'Why Choose Our Commercial Services',
@@ -161,7 +157,6 @@ export const services: ServiceData[] = [
     shortDescription: 'Complete home renovation solutions. Weekend friendly, safety-first.',
     description: 'Safe, reliable scaffolding solutions for home renovations, extensions, and maintenance. We understand the unique needs of residential projects.',
     icon: Home,
-    image: 'https://picsum.photos/seed/residential/800/450',
     badge: { text: 'Home-Friendly Solutions', icon: Home },
     galleryLabel: 'Residential Scaffolding Gallery Placeholder',
     featuresTitle: 'Why Choose Our Residential Services',
