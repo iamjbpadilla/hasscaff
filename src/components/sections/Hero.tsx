@@ -6,7 +6,7 @@ import QuoteForm from './QuoteForm';
 
 const Hero: React.FC = () => {
   return (
-    <section className="relative py-20 md:py-24 bg-gradient-to-b from-gray-50 to-white dark:from-gray-900/50 dark:to-brand-dark">
+    <section className="relative pt-24 pb-12 md:pt-28 md:pb-16 bg-gradient-to-b from-gray-50 to-white dark:from-gray-900/50 dark:to-brand-dark">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           {/* Left Content */}
