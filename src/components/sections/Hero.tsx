@@ -6,11 +6,11 @@ import QuoteForm from './QuoteForm';
 
 const Hero: React.FC = () => {
   return (
-    <section className="relative min-h-screen flex items-center pt-24 md:pt-28 pb-16 md:pb-24 bg-gradient-to-b from-gray-50 to-white dark:from-gray-900/50 dark:to-brand-dark">
+    <section className="relative py-20 md:py-24 bg-gradient-to-b from-gray-50 to-white dark:from-gray-900/50 dark:to-brand-dark">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           {/* Left Content */}
-          <div className="space-y-8">
+          <div className="space-y-6">
             {/* Trust Badge */}
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-primary/10 border border-brand-primary/20 industrial-glow">
               <ShieldCheck className="w-4 h-4 text-brand-primary" />
@@ -73,22 +73,6 @@ const Hero: React.FC = () => {
               >
                 <span>Get Free Quote</span>
               </a>
-            </div>
-
-            {/* Stats */}
-            <div className="grid grid-cols-3 gap-6 pt-8 border-t border-gray-200 dark:border-gray-700">
-              <div className="text-center">
-                <p className="text-3xl font-bold text-gray-900 dark:text-white">500+</p>
-                <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">Projects Completed</p>
-              </div>
-              <div className="text-center">
-                <p className="text-3xl font-bold text-gray-900 dark:text-white">24/7</p>
-                <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">Emergency Service</p>
-              </div>
-              <div className="text-center">
-                <p className="text-3xl font-bold text-gray-900 dark:text-white">100%</p>
-                <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">Safety Record</p>
-              </div>
             </div>
           </div>
 
