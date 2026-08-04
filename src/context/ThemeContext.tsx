@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useLayoutEffect, ReactNode } from 'react';
 
 interface ThemeContextType {
   darkMode: boolean;
@@ -18,7 +18,7 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
     return true; // Default to dark mode
   });
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     // Update document class
     if (darkMode) {
       document.documentElement.classList.add('dark');
