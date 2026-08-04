@@ -18,8 +18,8 @@ const Hero: React.FC = () => {
             
             {/* Headline */}
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight tracking-tight text-gray-900 dark:text-white">
-              Your Trusted Partner for<br />
-              <span className="text-brand-primary">Safe Scaffolding Solutions</span>
+              Safe Scaffolding Hire<br />
+              <span className="text-brand-primary">Brisbane, Gold Coast & Sunshine Coast</span>
             </h1>
             
             {/* Subtext */}

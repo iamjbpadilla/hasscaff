@@ -14,7 +14,9 @@ import Commercial from './pages/Commercial';
 import LabourHire from './pages/LabourHire';
 import HangOnSystems from './pages/HangOnSystems';
 import Locations from './pages/Locations';
+import NotFound from './pages/NotFound';
 import DemoModal from './components/common/DemoModal';
+import Analytics from './components/common/Analytics';
 import Schema from './components/common/Schema';
 
 function App() {
@@ -23,6 +25,7 @@ function App() {
       <BrowserRouter>
         <ThemeProvider>
           <Schema type="LocalBusiness" />
+          <Analytics />
           <DemoModal />
           <Routes>
             <Route path="/" element={<Home />} />
@@ -46,6 +49,7 @@ function App() {
             <Route path="/commercial" element={<Commercial />} />
             <Route path="/labour-hire" element={<LabourHire />} />
             <Route path="/hang-on-systems" element={<HangOnSystems />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </ThemeProvider>
       </BrowserRouter>
