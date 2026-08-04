@@ -19,9 +19,17 @@ const Services: React.FC = () => {
             <Link 
               key={service.id}
               to={service.route}
-              className="group border-2 rounded-2xl p-8 hover:border-brand-primary hover:shadow-xl transition-all duration-300 bg-white border-gray-200 dark:bg-gray-900 dark:border-gray-800"
+              className="group border-2 rounded-2xl overflow-hidden hover:border-brand-primary hover:shadow-xl transition-all duration-300 bg-white border-gray-200 dark:bg-gray-900 dark:border-gray-800"
             >
-              <div className="flex items-start gap-6">
+              <div className="aspect-[2/1] bg-gray-100 dark:bg-gray-800 overflow-hidden">
+                <img
+                  src={service.image}
+                  alt={service.title}
+                  loading="lazy"
+                  className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-300"
+                />
+              </div>
+              <div className="p-6 flex items-start gap-6">
                 <div className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 bg-brand-primary/10 group-hover:bg-brand-primary transition-colors duration-300">
                   <service.icon className="w-6 h-6 text-brand-primary group-hover:text-white transition-colors duration-300" />
                 </div>
