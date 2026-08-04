@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { MapPin, ArrowRight } from 'lucide-react';
 import { locations } from '../../data/locations';
 
@@ -30,7 +31,8 @@ const RecentProjects: React.FC = () => {
 
         <div className="grid md:grid-cols-2 gap-6 mb-12">
           {projects.map((project, index) => (
-            <article
+            <Link
+              to="/contact"
               key={index}
               className="group border-2 rounded-2xl overflow-hidden bg-white border-gray-200 dark:bg-gray-900 dark:border-gray-800 hover:border-brand-primary transition-all duration-300"
             >
@@ -55,7 +57,7 @@ const RecentProjects: React.FC = () => {
                 </h3>
                 <p className="text-sm font-mono text-gray-500 dark:text-gray-500">{project.date}</p>
               </div>
-            </article>
+            </Link>
           ))}
         </div>
 
