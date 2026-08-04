@@ -2,7 +2,7 @@ import { Helmet } from 'react-helmet-async';
 import { COMPANY_INFO } from '../../lib/constants';
 
 interface SchemaProps {
-  type: 'LocalBusiness' | 'Service' | 'BreadcrumbList';
+  type: 'LocalBusiness' | 'Service' | 'BreadcrumbList' | 'FAQPage';
   data?: any;
 }
 
@@ -11,54 +11,52 @@ const Schema: React.FC<SchemaProps> = ({ type, data }) => {
     return {
       '@context': 'https://schema.org',
       '@type': 'LocalBusiness',
-      name: COMPANY_INFO.name,
-      description: 'Professional scaffolding hire and labour services across Brisbane, Gold Coast, and South East Queensland.',
+      name: data?.name || COMPANY_INFO.name,
+      description: data?.description || 'Professional scaffolding hire and labour services across Brisbane, Gold Coast, and South East Queensland.',
       url: 'https://hasscaff.com.au',
       telephone: COMPANY_INFO.phone,
       email: 'info@hasscaff.com.au',
       address: {
         '@type': 'PostalAddress',
-        addressLocality: 'Brisbane',
-        addressRegion: 'QLD',
-        addressCountry: 'AU',
-        postalCode: '4000'
+        addressLocality: data?.address?.addressLocality || 'Brisbane',
+        addressRegion: data?.address?.addressRegion || 'QLD',
+        addressCountry: data?.address?.addressCountry || 'AU',
+        postalCode: data?.address?.postalCode || '4000'
       },
       geo: {
         '@type': 'GeoCoordinates',
-        latitude: '-27.4698',
-        longitude: '153.0251'
+        latitude: data?.geo?.latitude || '-27.4698',
+        longitude: data?.geo?.longitude || '153.0251'
       },
-      areaServed: [
-        {
-          '@type': 'City',
-          name: 'Brisbane'
-        },
-        {
-          '@type': 'City',
-          name: 'Gold Coast'
-        },
-        {
-          '@type': 'City',
-          name: 'Sunshine Coast'
-        }
+      areaServed: data?.areaServed || [
+        { '@type': 'City', name: 'Brisbane' },
+        { '@type': 'City', name: 'Gold Coast' },
+        { '@type': 'City', name: 'Sunshine Coast' }
       ],
       openingHoursSpecification: {
         '@type': 'OpeningHoursSpecification',
-        dayOfWeek: [
-          'Monday',
-          'Tuesday',
-          'Wednesday',
-          'Thursday',
-          'Friday',
-          'Saturday',
-          'Sunday'
-        ],
+        dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
         opens: '00:00',
         closes: '23:59'
       },
       priceRange: '$$',
       paymentAccepted: ['Cash', 'Credit Card', 'Bank Transfer'],
       license: `QBCC #${COMPANY_INFO.qbccLicense}`
+    };
+  };
+
+  const generateFAQPageSchema = () => {
+    return {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: data.map((item: any) => ({
+        '@type': 'Question',
+        name: item.question,
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: item.answer
+        }
+      }))
     };
   };
 
@@ -111,6 +109,8 @@ const Schema: React.FC<SchemaProps> = ({ type, data }) => {
         return generateServiceSchema();
       case 'BreadcrumbList':
         return generateBreadcrumbSchema();
+      case 'FAQPage':
+        return generateFAQPageSchema();
       default:
         return null;
     }

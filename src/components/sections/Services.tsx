@@ -1,16 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Wrench, Users, Building2, Home, ArrowRight } from 'lucide-react';
-import { services as servicesData } from '../../data/services';
+import { ArrowRight } from 'lucide-react';
+import { services } from '../../data/services';
 
 const Services: React.FC = () => {
-  // Add icons and routes to services data
-  const services = servicesData.map((service, index) => ({
-    ...service,
-    icon: index === 0 ? <Wrench className="w-6 h-6" /> : index === 1 ? <Users className="w-6 h-6" /> : index === 2 ? <Building2 className="w-6 h-6" /> : <Home className="w-6 h-6" />,
-    route: index === 0 ? '/services/hang-on-systems' : index === 1 ? '/services/labour-hire' : index === 2 ? '/services/commercial' : '/services/residential'
-  }));
-
   return (
     <section id="services" className="py-16 md:py-24 bg-gray-50 dark:bg-gray-900/50 bg-pattern-dots">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -22,24 +15,22 @@ const Services: React.FC = () => {
         </div>
 
         <div className="grid md:grid-cols-2 gap-6">
-          {services.map((service, index) => (
+          {services.map((service) => (
             <Link 
-              key={index}
+              key={service.id}
               to={service.route}
               className="group border-2 rounded-2xl p-8 hover:border-brand-primary hover:shadow-xl transition-all duration-300 bg-white border-gray-200 dark:bg-gray-900 dark:border-gray-800"
             >
               <div className="flex items-start gap-6">
                 <div className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 bg-brand-primary/10 group-hover:bg-brand-primary transition-colors duration-300">
-                  <div className="w-6 h-6 flex items-center justify-center text-brand-primary group-hover:text-white transition-colors duration-300">
-                    {service.icon}
-                  </div>
+                  <service.icon className="w-6 h-6 text-brand-primary group-hover:text-white transition-colors duration-300" />
                 </div>
                 <div className="flex-1">
                   <h3 className="text-lg font-bold mb-2 group-hover:text-brand-primary transition-colors duration-300 text-gray-900 dark:text-white">
                     {service.title}
                   </h3>
                   <p className="text-sm mb-4 leading-relaxed text-gray-600 dark:text-gray-400">
-                    {service.description}
+                    {service.shortDescription}
                   </p>
                   <div className="flex items-center gap-2 text-brand-primary font-medium group-hover:gap-3 transition-all duration-300">
                     <span>Learn More</span>

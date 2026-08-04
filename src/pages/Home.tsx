@@ -1,9 +1,14 @@
 import PageLayout from '../components/layout/PageLayout';
 import Hero from '../components/sections/Hero';
+import TrustBar from '../components/sections/TrustBar';
 import Services from '../components/sections/Services';
+import RecentProjects from '../components/sections/RecentProjects';
 import ServiceAreas from '../components/sections/ServiceAreas';
 import BookingProcess from '../components/sections/BookingProcess';
+import Testimonials from '../components/sections/Testimonials';
+import FAQ from '../components/sections/FAQ';
 import SEO from '../components/common/SEO';
+import Schema from '../components/common/Schema';
 import { Phone } from 'lucide-react';
 import { COMPANY_INFO } from '../lib/constants';
 
@@ -11,12 +16,17 @@ const Home: React.FC = () => {
   return (
     <>
       <SEO />
+      <Schema type="LocalBusiness" />
       <PageLayout>
         <Hero />
+        <TrustBar />
         <Services />
+        <RecentProjects />
         <ServiceAreas />
         <BookingProcess />
-        
+        <Testimonials />
+        <FAQ />
+
         {/* Final CTA Section */}
         <section className="py-16 md:py-24 bg-brand-primary">
           <div className="max-w-7xl mx-auto px-6 lg:px-8 text-center">

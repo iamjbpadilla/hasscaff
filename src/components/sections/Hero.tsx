@@ -1,11 +1,12 @@
 import React from 'react';
 import { Phone, ShieldCheck, Clock, Award } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { COMPANY_INFO } from '../../lib/constants';
 import QuoteForm from './QuoteForm';
 
 const Hero: React.FC = () => {
   return (
-    <section className="relative pt-20 pb-16 md:pb-24 bg-gradient-to-b from-gray-50 to-white dark:from-gray-900/50 dark:to-brand-dark">
+    <section className="relative min-h-screen flex items-center pt-20 pb-16 md:pb-24 bg-gradient-to-b from-gray-50 to-white dark:from-gray-900/50 dark:to-brand-dark">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           {/* Left Content */}
@@ -17,7 +18,7 @@ const Hero: React.FC = () => {
             </div>
             
             {/* Headline */}
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight tracking-tight text-gray-900 dark:text-white">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-display font-bold leading-tight tracking-tight text-gray-900 dark:text-white">
               Safe Scaffolding Hire<br />
               <span className="text-brand-primary">Brisbane, Gold Coast & Sunshine Coast</span>
             </h1>
@@ -93,9 +94,14 @@ const Hero: React.FC = () => {
           </div>
 
           {/* Right - Quote Form */}
-          <div className="lg:sticky lg:top-24">
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.7, delay: 0.3, ease: 'easeOut' }}
+            className="lg:sticky lg:top-24"
+          >
             <QuoteForm />
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>

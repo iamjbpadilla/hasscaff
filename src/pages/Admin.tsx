@@ -77,6 +77,7 @@ const Admin: React.FC = () => {
         title="Admin Panel - Hasscaff"
         description="Manage quote requests and customer inquiries"
         path="/admin"
+        noIndex
       />
       <Schema 
         type="BreadcrumbList"
