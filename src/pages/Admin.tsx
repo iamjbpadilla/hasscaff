@@ -29,6 +29,7 @@ import {
   X,
   Check,
   Inbox,
+  Activity,
 } from 'lucide-react';
 
 type SortBy = 'createdAt' | 'updatedAt' | 'status';
@@ -342,16 +343,20 @@ const Admin: React.FC = () => {
                             {allSelected ? <CheckSquare className="w-5 h-5 text-brand-primary" /> : <Square className="w-5 h-5 text-gray-400" />}
                           </button>
                         </th>
-                        <th className="p-4 cursor-pointer" onClick={() => handleSort('createdAt')}>
+                        <th className="p-4 cursor-pointer" onClick={() => handleSort('createdAt')} title="Sort by date" aria-label="Created date">
                           <span className="flex items-center gap-1 font-bold text-gray-700 dark:text-gray-300">
-                            Created <SortIcon field="createdAt" />
+                            <Calendar className="w-4 h-4" /> <SortIcon field="createdAt" />
                           </span>
                         </th>
-                        <th className="p-4 font-bold text-gray-700 dark:text-gray-300">Service</th>
-                        <th className="p-4 font-bold text-gray-700 dark:text-gray-300 hidden sm:table-cell">Location</th>
-                        <th className="p-4 cursor-pointer" onClick={() => handleSort('status')}>
+                        <th className="p-4 font-bold text-gray-700 dark:text-gray-300" title="Service" aria-label="Service">
+                          <Building2 className="w-4 h-4" />
+                        </th>
+                        <th className="p-4 font-bold text-gray-700 dark:text-gray-300 hidden sm:table-cell" title="Location" aria-label="Location">
+                          <MapPin className="w-4 h-4" />
+                        </th>
+                        <th className="p-4 cursor-pointer" onClick={() => handleSort('status')} title="Sort by status" aria-label="Status">
                           <span className="flex items-center gap-1 font-bold text-gray-700 dark:text-gray-300">
-                            Status <SortIcon field="status" />
+                            <Activity className="w-4 h-4" /> <SortIcon field="status" />
                           </span>
                         </th>
                       </tr>
@@ -402,7 +407,7 @@ const Admin: React.FC = () => {
                 </div>
               </div>
 
-              <div className="bg-white dark:bg-gray-900 border-2 border-gray-200 dark:border-gray-800 rounded-2xl p-6 overflow-y-auto min-h-[300px]">
+              <div className="bg-white dark:bg-gray-900 border-2 border-gray-200 dark:border-gray-800 rounded-2xl p-6 overflow-y-auto min-h-[300px] lg:sticky lg:top-4 lg:self-start lg:max-h-[calc(100vh-120px)]">
                 {selectedRequest ? (
                   <DetailPanel
                     request={selectedRequest}
