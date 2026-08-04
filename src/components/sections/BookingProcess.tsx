@@ -36,7 +36,7 @@ const BookingProcess: React.FC = () => {
           {/* Connection Line */}
           <div className="hidden md:block absolute top-16 left-0 right-0 h-0.5 bg-gradient-to-r from-brand-primary/20 via-brand-primary/40 to-brand-primary/20 z-0"></div>
           
-          <div className="grid md:grid-cols-3 gap-8 items-start relative z-10">
+          <div className="grid md:grid-cols-3 gap-8 items-stretch relative z-10">
             {steps.map((step) => (
               <React.Fragment key={step.number}>
                 <div className="relative group">
