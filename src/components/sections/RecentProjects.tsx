@@ -30,27 +30,27 @@ const RecentProjects: React.FC = () => {
 
         <div className="grid md:grid-cols-2 gap-6 mb-12">
           {projects.map((project, index) => (
-            <div
+            <article
               key={index}
               className="group border-2 rounded-2xl overflow-hidden bg-white border-gray-200 dark:bg-gray-900 dark:border-gray-800 hover:border-brand-primary transition-all duration-300"
             >
-              <div className="aspect-video bg-gray-200 dark:bg-gray-800 flex items-center justify-center relative">
-                <span className="text-gray-500 dark:text-gray-400 text-sm font-medium">{project.title} — Project Image</span>
-                <div className="absolute top-4 left-4 px-3 py-1 bg-white/90 dark:bg-gray-900/90 rounded-full text-xs font-bold text-brand-primary">
+              <div className="aspect-video bg-[#1E242B] border border-[#28323C] flex items-center justify-center relative">
+                <span className="text-gray-400 text-sm font-medium">{project.title} — Project Image</span>
+                <div className="absolute top-4 left-4 px-3 py-1 bg-white/90 dark:bg-gray-900/90 rounded-full text-xs font-bold text-brand-primary font-mono">
                   {project.type}
                 </div>
               </div>
               <div className="p-6">
-                <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 mb-2">
+                <div className="flex items-center gap-2 text-sm font-mono text-brand-primary mb-2">
                   <MapPin className="w-4 h-4" />
                   {project.location}
                 </div>
                 <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-1 group-hover:text-brand-primary transition-colors">
                   {project.title}
                 </h3>
-                <p className="text-sm text-gray-500 dark:text-gray-500">{project.date}</p>
+                <p className="text-sm font-mono text-gray-500 dark:text-gray-500">{project.date}</p>
               </div>
-            </div>
+            </article>
           ))}
         </div>
 

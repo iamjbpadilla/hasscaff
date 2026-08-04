@@ -22,9 +22,10 @@ const item = {
 
 const Hero: React.FC = () => {
   return (
-    <section className="relative pt-24 pb-12 md:pt-28 md:pb-16 bg-gradient-to-b from-gray-50 to-white dark:from-gray-900/50 dark:to-brand-dark">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+    <section className="relative pt-24 pb-12 md:pt-28 md:pb-16 bg-gradient-to-b from-gray-50 to-white dark:bg-[url('https://images.unsplash.com/photo-1504307651254-35680f356e54?auto=format&fit=crop&w=1920&q=80')] dark:bg-cover dark:bg-center overflow-hidden">
+      <div className="absolute inset-0 dark:bg-black/65 pointer-events-none" aria-hidden="true" />
+      <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left Content */}
           <motion.div initial="hidden" animate="show" variants={container} className="space-y-6">
             {/* Trust Badge */}
@@ -33,12 +34,14 @@ const Hero: React.FC = () => {
               <span className="text-sm font-semibold text-brand-primary">QBCC Licensed & Fully Insured</span>
             </motion.div>
             
+            {/* Monospaced Location Badge */}
+            <motion.div variants={item} className="font-mono text-xs sm:text-sm text-brand-primary tracking-widest uppercase">
+              // Serving Brisbane • Gold Coast • Sunshine Coast
+            </motion.div>
+
             {/* Headline */}
-            <motion.h1 variants={item} className="text-3xl sm:text-5xl lg:text-6xl font-display font-bold leading-tight tracking-tight text-gray-900 dark:text-white">
+            <motion.h1 variants={item} className="text-3xl sm:text-5xl lg:text-6xl font-display font-extrabold leading-[1.15] tracking-tight text-gray-900 dark:text-white">
               Safe Scaffolding Hire
-              <span className="block text-brand-primary mt-2 text-2xl sm:text-3xl lg:text-4xl leading-tight">
-                Brisbane, Gold Coast & Sunshine Coast
-              </span>
             </motion.h1>
             
             {/* Subtext */}
@@ -80,17 +83,18 @@ const Hero: React.FC = () => {
             {/* CTAs */}
             <motion.div variants={item} className="flex flex-col sm:flex-row gap-4 pt-2">
               <a 
-                href={`tel:${COMPANY_INFO.phone.replace(/\s/g, '')}`}
-                className="px-8 py-4 flex items-center justify-center gap-2 bg-brand-primary text-white font-semibold rounded-full hover:bg-brand-secondary transition-all duration-300 shadow-lg hover:shadow-xl whitespace-nowrap"
-              >
-                <Phone className="w-5 h-5" />
-                <span>Call {COMPANY_INFO.phone}</span>
-              </a>
-              <a 
                 href="#quote" 
-                className="px-8 py-4 flex items-center justify-center border-2 border-brand-primary text-brand-primary font-semibold rounded-full hover:bg-brand-primary hover:text-white transition-all duration-300 whitespace-nowrap"
+                className="px-8 py-4 flex items-center justify-center bg-brand-primary text-brand-dark font-bold rounded-full hover:bg-brand-secondary transition-all duration-300 shadow-lg hover:shadow-xl whitespace-nowrap"
               >
                 <span>Get Free Quote</span>
+              </a>
+              <a 
+                href={`tel:${COMPANY_INFO.phone.replace(/\s/g, '')}`}
+                aria-label={`Call Hasscaff on ${COMPANY_INFO.phone}`}
+                className="px-8 py-4 flex items-center justify-center gap-2 border border-white/30 text-white font-semibold rounded-full hover:bg-white/10 transition-all duration-300 whitespace-nowrap"
+              >
+                <Phone className="w-5 h-5" />
+                <span>Call Us Direct</span>
               </a>
             </motion.div>
           </motion.div>

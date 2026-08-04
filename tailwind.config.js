@@ -10,9 +10,9 @@ export default {
       // Brand Colors - Industrial construction theme
       colors: {
         brand: {
-          primary: '#FF6B00', // Safety orange - construction industry standard
-          secondary: '#E65100', // Darker orange for hover states
-          accent: '#FFC107', // Construction yellow for highlights
+          primary: '#FF5722', // Safety orange - construction industry standard
+          secondary: '#E64A19', // Darker orange for hover states
+          accent: '#FFB800', // Construction yellow for highlights
           dark: '#1A1A1A', // Dark industrial background
           light: '#F8F9FA', // Light industrial surface
           breadcrumb: '#F5F5F7',
@@ -84,9 +84,9 @@ export default {
   themes: {
     build001: {
       colors: {
-        primary: '#FF6B00', // Safety orange - construction industry standard
-        secondary: '#E65100', // Darker orange for hover states
-        accent: '#FFC107', // Construction yellow for highlights
+        primary: '#FF5722', // Safety orange - construction industry standard
+        secondary: '#E64A19', // Darker orange for hover states
+        accent: '#FFB800', // Construction yellow for highlights
         background: '#FFFFFF',
         surface: '#F8F9FA',
         surfaceDark: '#1A1A1A',
@@ -136,9 +136,9 @@ export default {
  * =====================================================
  * 
  * COLORS:
- * - brand-primary: #FF6B00 (Safety orange - construction industry standard)
- * - brand-secondary: #E65100 (Darker orange for hover states)
- * - brand-accent: #FFC107 (Construction yellow for highlights)
+ * - brand-primary: #FF5722 (Safety orange - construction industry standard)
+ * - brand-secondary: #E64A19 (Darker orange for hover states)
+ * - brand-accent: #FFB800 (Construction yellow for highlights)
  * - brand-dark: #1A1A1A (Dark industrial background)
  * - brand-light: #F8F9FA (Light industrial surface)
  * 

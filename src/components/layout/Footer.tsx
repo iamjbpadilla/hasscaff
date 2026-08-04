@@ -24,6 +24,7 @@ const Footer: React.FC = () => {
             </p>
             <a 
               href={`tel:${COMPANY_INFO.phone.replace(/\s/g, '')}`}
+              aria-label={`Call Hasscaff on ${COMPANY_INFO.phone}`}
               className="flex items-center space-x-2 text-brand-primary font-semibold"
             >
               <Phone className="w-4 h-4 text-brand-primary" />

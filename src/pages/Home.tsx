@@ -43,10 +43,11 @@ const Home: React.FC = () => {
               </a>
               <a 
                 href={`tel:${COMPANY_INFO.phone.replace(/\s/g, '')}`}
-                className="inline-flex items-center justify-center gap-2 px-8 py-4 border-2 border-white text-white font-semibold rounded-full hover:bg-white/10 transition-all duration-300"
+                aria-label={`Call Hasscaff on ${COMPANY_INFO.phone}`}
+                className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-brand-dark text-white font-semibold rounded-full hover:bg-black transition-all duration-300 shadow-lg hover:shadow-xl"
               >
                 <Phone className="w-5 h-5" />
-                <span>Call {COMPANY_INFO.phone}</span>
+                <span>Call Us Now</span>
               </a>
             </div>
           </div>

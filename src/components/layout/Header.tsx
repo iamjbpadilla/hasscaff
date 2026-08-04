@@ -76,6 +76,7 @@ const Header: React.FC<HeaderProps> = ({ darkMode, setDarkMode, mobileMenuOpen, 
             </button>
             <a 
               href={`tel:${COMPANY_INFO.phone.replace(/\s/g, '')}`}
+              aria-label={`Call Hasscaff on ${COMPANY_INFO.phone}`}
               className="flex items-center space-x-2 font-semibold text-sm text-brand-primary hover:text-brand-secondary transition-colors"
             >
               <Phone className="w-4 h-4" />
@@ -120,6 +121,7 @@ const Header: React.FC<HeaderProps> = ({ darkMode, setDarkMode, mobileMenuOpen, 
               </button>
               <a 
                 href={`tel:${COMPANY_INFO.phone.replace(/\s/g, '')}`}
+                aria-label={`Call Hasscaff on ${COMPANY_INFO.phone}`}
                 className="flex items-center space-x-2 text-brand-primary font-semibold py-2"
               >
                 <Phone className="w-4 h-4 text-brand-primary" />
