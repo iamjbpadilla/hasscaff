@@ -1,4 +1,5 @@
 import React from 'react';
+import { useLocation } from 'react-router-dom';
 import Header from './Header';
 import Footer from './Footer';
 import StickyActionBar from './StickyActionBar';
@@ -13,6 +14,8 @@ interface PageLayoutProps {
 const PageLayout: React.FC<PageLayoutProps> = ({ children, breadcrumbs }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
   const { darkMode, setDarkMode } = useTheme();
+  const location = useLocation();
+  const isHome = location.pathname === '/';
 
   return (
     <div className="min-h-screen font-sans transition-colors duration-300 bg-white text-gray-900 dark:bg-brand-dark dark:text-white">
@@ -30,7 +33,7 @@ const PageLayout: React.FC<PageLayoutProps> = ({ children, breadcrumbs }) => {
         setMobileMenuOpen={setMobileMenuOpen}
       />
       
-      <main id="main-content" tabIndex={-1} className="pt-20">
+      <main id="main-content" tabIndex={-1} className={isHome ? '' : 'pt-20'}>
         {breadcrumbs && (
           <div className="max-w-7xl mx-auto px-6 lg:px-8">
             <Breadcrumb items={breadcrumbs} />
