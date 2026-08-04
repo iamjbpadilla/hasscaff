@@ -165,3 +165,7 @@
     animation: subtle-pulse 4s ease-in-out infinite;
   }
 }
+
+section {
+  min-height: 100vh;
+}
