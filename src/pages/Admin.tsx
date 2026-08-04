@@ -96,10 +96,7 @@ const Admin: React.FC = () => {
     };
   }, [requests]);
 
-  const selectedRequest = useMemo(
-    () => requests.find((r) => r.id === selectedId) || null,
-    [requests, selectedId]
-  );
+  // Details are rendered inline from the selected table row
 
   const allSelected = filteredRequests.length > 0 && filteredRequests.every((r) => selectedIds.has(r.id));
 
@@ -368,50 +365,83 @@ const Admin: React.FC = () => {
                 <th className="p-4 hidden md:table-cell font-bold text-gray-700 dark:text-gray-300">Notes</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-100 dark:divide-gray-800">
+            <tbody
+              onKeyDown={(e) => {
+                const idx = filteredRequests.findIndex((r) => r.id === selectedId);
+                const total = filteredRequests.length;
+                if (total === 0) return;
+                if (['ArrowUp', 'ArrowDown', 'Enter', ' '].includes(e.key)) e.preventDefault();
+                if (e.key === 'ArrowUp') {
+                  const next = idx > 0 ? idx - 1 : total - 1;
+                  setSelectedId(filteredRequests[next].id);
+                } else if (e.key === 'ArrowDown') {
+                  const next = idx < total - 1 ? idx + 1 : 0;
+                  setSelectedId(filteredRequests[next].id);
+                } else if (e.key === 'Enter' || e.key === ' ') {
+                  setSelectedId(selectedId ? null : filteredRequests[0].id);
+                }
+              }}
+              tabIndex={0}
+              className="divide-y divide-gray-100 dark:divide-gray-800 outline-none"
+            >
               {filteredRequests.map((request) => (
-                <tr
-                  key={request.id}
-                  className={`hover:bg-gray-50 dark:hover:bg-gray-900/50 cursor-pointer transition-colors ${
-                    selectedId === request.id ? 'bg-brand-primary/5 dark:bg-brand-primary/10' : ''
-                  }`}
-                  onClick={() => setSelectedId(request.id)}
-                >
-                  <td className="p-4" onClick={(e) => e.stopPropagation()}>
-                    <button onClick={() => toggleSelect(request.id)} className="focus:outline-none">
-                      {selectedIds.has(request.id) ? (
-                        <CheckSquare className="w-5 h-5 text-brand-primary" />
+                <React.Fragment key={request.id}>
+                  <tr
+                    onClick={() => setSelectedId(selectedId === request.id ? null : request.id)}
+                    className={`hover:bg-gray-50 dark:hover:bg-gray-900/50 cursor-pointer transition-colors ${
+                      selectedId === request.id
+                        ? 'bg-brand-primary/5 dark:bg-brand-primary/10 ring-1 ring-inset ring-brand-primary'
+                        : ''
+                    }`}
+                  >
+                    <td className="p-4" onClick={(e) => e.stopPropagation()}>
+                      <button onClick={() => toggleSelect(request.id)} className="focus:outline-none">
+                        {selectedIds.has(request.id) ? (
+                          <CheckSquare className="w-5 h-5 text-brand-primary" />
+                        ) : (
+                          <Square className="w-5 h-5 text-gray-400" />
+                        )}
+                      </button>
+                    </td>
+                    <td className="p-4 text-gray-900 dark:text-white font-medium">
+                      {new Date(request.createdAt).toLocaleDateString()}
+                    </td>
+                    <td className="p-4 text-gray-900 dark:text-white">{SERVICE_LABELS[request.service]}</td>
+                    <td className="p-4 text-gray-900 dark:text-white">{request.location}</td>
+                    <td className="p-4 text-gray-600 dark:text-gray-400">{request.phone}</td>
+                    <td className="p-4">
+                      <StatusBadge status={request.status} />
+                    </td>
+                    <td className="p-4 text-gray-900 dark:text-white font-medium">
+                      {new Date(request.updatedAt).toLocaleDateString()}
+                    </td>
+                    <td className="p-4 hidden md:table-cell text-gray-600 dark:text-gray-400">
+                      {request.file ? (
+                        <span className="inline-flex items-center gap-2">
+                          <FileText className="w-4 h-4 text-gray-500" />
+                          <span className="truncate max-w-[100px]">{request.file}</span>
+                        </span>
                       ) : (
-                        <Square className="w-5 h-5 text-gray-400" />
+                        '—'
                       )}
-                    </button>
-                  </td>
-                  <td className="p-4 text-gray-900 dark:text-white font-medium">
-                    {new Date(request.createdAt).toLocaleDateString()}
-                  </td>
-                  <td className="p-4 text-gray-900 dark:text-white">{SERVICE_LABELS[request.service]}</td>
-                  <td className="p-4 text-gray-900 dark:text-white">{request.location}</td>
-                  <td className="p-4 text-gray-600 dark:text-gray-400">{request.phone}</td>
-                  <td className="p-4">
-                    <StatusBadge status={request.status} />
-                  </td>
-                  <td className="p-4 text-gray-900 dark:text-white font-medium">
-                    {new Date(request.updatedAt).toLocaleDateString()}
-                  </td>
-                  <td className="p-4 hidden md:table-cell text-gray-600 dark:text-gray-400">
-                    {request.file ? (
-                      <span className="inline-flex items-center gap-2">
-                        <FileText className="w-4 h-4 text-gray-500" />
-                        <span className="truncate max-w-[100px]">{request.file}</span>
-                      </span>
-                    ) : (
-                      '—'
-                    )}
-                  </td>
-                  <td className="p-4 hidden md:table-cell text-gray-600 dark:text-gray-400 max-w-xs truncate">
-                    {request.notes || '—'}
-                  </td>
-                </tr>
+                    </td>
+                    <td className="p-4 hidden md:table-cell text-gray-600 dark:text-gray-400 max-w-xs truncate">
+                      {request.notes || '—'}
+                    </td>
+                  </tr>
+                  {selectedId === request.id && (
+                    <tr className="bg-gray-50 dark:bg-gray-900/30 border-b border-gray-200 dark:border-gray-800">
+                      <td colSpan={9} className="p-4">
+                        <InlineDetail
+                          request={request}
+                          onStatusChange={updateStatus}
+                          onNoteSave={saveNote}
+                          onDelete={(id) => setConfirm({ id })}
+                        />
+                      </td>
+                    </tr>
+                  )}
+                </React.Fragment>
               ))}
               {filteredRequests.length === 0 && (
                 <tr>
@@ -475,35 +505,7 @@ const Admin: React.FC = () => {
         </div>
       </AdminLayout>
 
-      {/* Detail Drawer */}
-      <AnimatePresence>
-        {selectedId && selectedRequest && (
-          <>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setSelectedId(null)}
-              className="fixed inset-0 z-50 bg-black/40"
-            />
-            <motion.aside
-              initial={{ x: '100%' }}
-              animate={{ x: 0 }}
-              exit={{ x: '100%' }}
-              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-              className="fixed top-0 right-0 z-50 w-full max-w-md h-full bg-white dark:bg-gray-900 border-l border-gray-200 dark:border-gray-800 shadow-2xl overflow-y-auto"
-            >
-              <DetailDrawer
-                request={selectedRequest}
-                onClose={() => setSelectedId(null)}
-                onStatusChange={updateStatus}
-                onNoteSave={saveNote}
-                onDelete={(id) => setConfirm({ id })}
-              />
-            </motion.aside>
-          </>
-        )}
-      </AnimatePresence>
+      {/* Inline expandable rows replace slide-over drawer */}
 
       {/* Confirm Delete */}
       {confirm && (
@@ -570,82 +572,72 @@ const Admin: React.FC = () => {
   );
 };
 
-const DetailDrawer: React.FC<{
+const InlineDetail: React.FC<{
   request: QuoteRequest;
-  onClose: () => void;
   onStatusChange: (id: string, status: QuoteRequest['status']) => void;
   onNoteSave: (id: string, note: string) => void;
   onDelete: (id: string) => void;
-}> = ({ request, onClose, onStatusChange, onNoteSave, onDelete }) => {
+}> = ({ request, onStatusChange, onNoteSave, onDelete }) => {
   const [note, setNote] = useState(request.notes || '');
   const statuses: QuoteRequest['status'][] = ['pending', 'contacted', 'quoted', 'completed'];
 
   return (
-    <div className="p-6">
-      <div className="flex items-center justify-between mb-8">
-        <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Request Details</h2>
-        <button onClick={onClose} className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800">
-          <X className="w-5 h-5" />
+    <div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <Info label="Phone" value={request.phone} icon={<Phone className="w-4 h-4" />} href={`tel:${request.phone.replace(/\s/g, '')}`} />
+        <Info label="Location" value={request.location} icon={<MapPin className="w-4 h-4" />} />
+        <Info label="Service" value={SERVICE_LABELS[request.service]} icon={<Building2 className="w-4 h-4" />} />
+        <Info label="Submitted" value={new Date(request.createdAt).toLocaleDateString()} icon={<Calendar className="w-4 h-4" />} />
+      </div>
+
+      <div className="mt-4">
+        <label className="text-xs font-bold uppercase tracking-wide text-gray-500 dark:text-gray-400">Status</label>
+        <div className="flex flex-wrap gap-2 mt-2">
+          {statuses.map((status) => (
+            <button
+              key={status}
+              onClick={() => onStatusChange(request.id, status)}
+              className={`px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wide border-2 transition-all ${
+                request.status === status
+                  ? `${STATUS_COLORS[status]} ring-2 ring-offset-2 ring-offset-white dark:ring-offset-gray-900 ring-brand-primary`
+                  : 'border-gray-200 dark:border-gray-800 text-gray-600 dark:text-gray-400 hover:border-brand-primary'
+              }`}
+            >
+              {STATUS_LABELS[status]}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div className="mt-4">
+        <label className="text-xs font-bold uppercase tracking-wide text-gray-500 dark:text-gray-400">Notes</label>
+        <textarea
+          value={note}
+          onChange={(e) => setNote(e.target.value)}
+          className="w-full p-3 mt-2 border-2 border-gray-200 dark:border-gray-800 rounded-xl bg-white dark:bg-gray-900 text-gray-900 dark:text-white text-sm min-h-[120px] focus:outline-none focus:ring-2 focus:ring-brand-primary"
+        />
+        <button
+          onClick={() => onNoteSave(request.id, note)}
+          className="mt-2 px-4 py-2 bg-brand-primary text-white text-sm font-bold rounded-lg hover:bg-brand-secondary transition-colors"
+        >
+          <Check className="w-4 h-4 inline mr-1" /> Save Notes
         </button>
       </div>
 
-      <div className="space-y-6">
-        <div className="grid grid-cols-2 gap-4">
-          <Info label="Phone" value={request.phone} icon={<Phone className="w-4 h-4" />} href={`tel:${request.phone.replace(/\s/g, '')}`} />
-          <Info label="Location" value={request.location} icon={<MapPin className="w-4 h-4" />} />
-          <Info label="Service" value={SERVICE_LABELS[request.service]} icon={<Building2 className="w-4 h-4" />} />
-          <Info label="Submitted" value={new Date(request.createdAt).toLocaleDateString()} icon={<Calendar className="w-4 h-4" />} />
+      {request.file && (
+        <div className="mt-4 p-4 border-2 border-gray-200 dark:border-gray-800 rounded-xl flex items-center gap-3">
+          <FileText className="w-5 h-5 text-brand-primary" />
+          <span className="text-sm text-gray-700 dark:text-gray-300 flex-1 truncate">{request.file}</span>
         </div>
+      )}
 
-        <div>
-          <label className="text-xs font-bold uppercase tracking-wide text-gray-500 dark:text-gray-400">Status</label>
-          <div className="flex flex-wrap gap-2 mt-2">
-            {statuses.map((status) => (
-              <button
-                key={status}
-                onClick={() => onStatusChange(request.id, status)}
-                className={`px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wide border-2 transition-all ${
-                  request.status === status
-                    ? `${STATUS_COLORS[status]} ring-2 ring-offset-2 ring-offset-white dark:ring-offset-gray-900 ring-brand-primary`
-                    : 'border-gray-200 dark:border-gray-800 text-gray-600 dark:text-gray-400 hover:border-brand-primary'
-                }`}
-              >
-                {STATUS_LABELS[status]}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        <div>
-          <label className="text-xs font-bold uppercase tracking-wide text-gray-500 dark:text-gray-400">Notes</label>
-          <textarea
-            value={note}
-            onChange={(e) => setNote(e.target.value)}
-            className="w-full p-3 mt-2 border-2 border-gray-200 dark:border-gray-800 rounded-xl bg-white dark:bg-gray-900 text-gray-900 dark:text-white text-sm min-h-[120px] focus:outline-none focus:ring-2 focus:ring-brand-primary"
-          />
-          <button
-            onClick={() => onNoteSave(request.id, note)}
-            className="mt-2 px-4 py-2 bg-brand-primary text-white text-sm font-bold rounded-lg hover:bg-brand-secondary transition-colors"
-          >
-            <Check className="w-4 h-4 inline mr-1" /> Save Notes
-          </button>
-        </div>
-
-        {request.file && (
-          <div className="p-4 border-2 border-gray-200 dark:border-gray-800 rounded-xl flex items-center gap-3">
-            <FileText className="w-5 h-5 text-brand-primary" />
-            <span className="text-sm text-gray-700 dark:text-gray-300 flex-1 truncate">{request.file}</span>
-          </div>
-        )}
-
-        <div className="pt-6 border-t border-gray-200 dark:border-gray-800">
-          <button
-            onClick={() => onDelete(request.id)}
-            className="w-full flex items-center justify-center gap-2 px-4 py-3 border-2 border-red-500 text-red-500 rounded-xl font-bold hover:bg-red-500 hover:text-white transition-colors"
-          >
-            <Trash2 className="w-4 h-4" /> Delete Request
-          </button>
-        </div>
+      <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-800 flex justify-end">
+        <button
+          onClick={() => onDelete(request.id)}
+          className="flex items-center gap-2 text-red-500 hover:text-red-400 font-bold text-sm"
+        >
+          <Trash2 className="w-4 h-4" /> Delete Request
+        </button>
       </div>
     </div>
   );
