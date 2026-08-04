@@ -1,5 +1,4 @@
 import React, { useMemo, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 import AdminLayout from '../components/layout/AdminLayout';
 import AdminHeader from '../components/layout/AdminHeader';
 import SEO from '../components/common/SEO';
@@ -391,7 +390,7 @@ const Admin: React.FC = () => {
                         </th>
                         <th className="py-2 px-3 cursor-pointer" onClick={() => handleSort('createdAt')}>
                           <span className="flex items-center gap-1">
-                            Date <SortIcon field="createdAt" />
+                            Created <SortIcon field="createdAt" />
                           </span>
                         </th>
                         <th className="py-2 px-3">Service</th>
@@ -402,6 +401,12 @@ const Admin: React.FC = () => {
                             Status <SortIcon field="status" />
                           </span>
                         </th>
+                        <th className="py-2 px-3 cursor-pointer" onClick={() => handleSort('updatedAt')}>
+                          <span className="flex items-center gap-1">
+                            Updated <SortIcon field="updatedAt" />
+                          </span>
+                        </th>
+                        <th className="py-2 px-3 hidden md:table-cell">File</th>
                         <th className="py-2 px-3 hidden md:table-cell">Notes</th>
                       </tr>
                     </thead>
@@ -432,6 +437,19 @@ const Admin: React.FC = () => {
                           <td className="py-2 px-3">
                             <StatusBadge status={request.status} />
                           </td>
+                          <td className="py-2 px-3 tabular-nums text-gray-600 dark:text-gray-400">
+                            {new Date(request.updatedAt).toLocaleDateString()}
+                          </td>
+                          <td className="py-2 px-3 hidden md:table-cell text-gray-600 dark:text-gray-400">
+                            {request.file ? (
+                              <span className="inline-flex items-center gap-1">
+                                <FileText className="w-3.5 h-3.5 text-gray-500" />
+                                <span className="truncate max-w-[80px]">{request.file}</span>
+                              </span>
+                            ) : (
+                              '—'
+                            )}
+                          </td>
                           <td className="py-2 px-3 hidden md:table-cell text-gray-600 dark:text-gray-400 max-w-xs truncate">
                             {request.notes || '—'}
                           </td>
@@ -439,7 +457,7 @@ const Admin: React.FC = () => {
                       ))}
                       {filteredRequests.length === 0 && (
                         <tr>
-                          <td colSpan={7} className="py-8 text-center text-xs text-gray-500 dark:text-gray-400">
+                          <td colSpan={9} className="py-8 text-center text-xs text-gray-500 dark:text-gray-400">
                             No requests found.
                           </td>
                         </tr>
@@ -453,34 +471,23 @@ const Admin: React.FC = () => {
         </div>
       </AdminLayout>
 
-      <AnimatePresence>
-        {selectedId && selectedRequest && (
-          <>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setSelectedId(null)}
-              className="fixed inset-0 z-50 bg-black/40"
+      {selectedId && selectedRequest && (
+        <>
+          <div
+            onClick={() => setSelectedId(null)}
+            className="fixed inset-0 z-50 bg-black/40"
+          />
+          <aside className="fixed top-0 right-0 z-50 w-full max-w-sm h-full bg-white dark:bg-gray-900 border-l border-gray-200 dark:border-gray-800 shadow-2xl overflow-y-auto">
+            <DetailDrawer
+              request={selectedRequest}
+              onClose={() => setSelectedId(null)}
+              onStatusChange={updateStatus}
+              onNoteSave={saveNote}
+              onDelete={(id) => setConfirm({ id })}
             />
-            <motion.aside
-              initial={{ x: '100%' }}
-              animate={{ x: 0 }}
-              exit={{ x: '100%' }}
-              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-              className="fixed top-0 right-0 z-50 w-full max-w-sm h-full bg-white dark:bg-gray-900 border-l border-gray-200 dark:border-gray-800 shadow-2xl overflow-y-auto"
-            >
-              <DetailDrawer
-                request={selectedRequest}
-                onClose={() => setSelectedId(null)}
-                onStatusChange={updateStatus}
-                onNoteSave={saveNote}
-                onDelete={(id) => setConfirm({ id })}
-              />
-            </motion.aside>
-          </>
-        )}
-      </AnimatePresence>
+          </aside>
+        </>
+      )}
 
       {confirm && (
         <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/50">
@@ -507,33 +514,28 @@ const Admin: React.FC = () => {
       )}
 
       <div className="fixed bottom-3 right-3 z-[70] space-y-2">
-        <AnimatePresence>
-          {toasts.map((toast) => (
-            <motion.div
-              key={toast.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 20 }}
-              className="bg-gray-900 dark:bg-white text-white dark:text-gray-900 px-3 py-2 rounded-lg shadow-lg flex items-center gap-2 text-xs"
-            >
-              <span className="font-medium">{toast.message}</span>
-              {toast.onUndo && (
-                <button
-                  onClick={() => {
-                    toast.onUndo?.();
-                    setToasts((prev) => prev.filter((t) => t.id !== toast.id));
-                  }}
-                  className="text-brand-primary font-semibold hover:underline"
-                >
-                  Undo
-                </button>
-              )}
-              <button onClick={() => setToasts((prev) => prev.filter((t) => t.id !== toast.id))}>
-                <X className="w-3.5 h-3.5" />
+        {toasts.map((toast) => (
+          <div
+            key={toast.id}
+            className="bg-gray-900 dark:bg-white text-white dark:text-gray-900 px-3 py-2 rounded-lg shadow-lg flex items-center gap-2 text-xs"
+          >
+            <span className="font-medium">{toast.message}</span>
+            {toast.onUndo && (
+              <button
+                onClick={() => {
+                  toast.onUndo?.();
+                  setToasts((prev) => prev.filter((t) => t.id !== toast.id));
+                }}
+                className="text-brand-primary font-semibold hover:underline"
+              >
+                Undo
               </button>
-            </motion.div>
-          ))}
-        </AnimatePresence>
+            )}
+            <button onClick={() => setToasts((prev) => prev.filter((t) => t.id !== toast.id))}>
+              <X className="w-3.5 h-3.5" />
+            </button>
+          </div>
+        ))}
       </div>
     </>
   );
