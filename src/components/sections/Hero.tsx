@@ -6,11 +6,11 @@ import QuoteForm from './QuoteForm';
 
 const Hero: React.FC = () => {
   return (
-    <section className="relative min-h-screen flex items-center pt-20 pb-16 md:pb-24 bg-gradient-to-b from-gray-50 to-white dark:from-gray-900/50 dark:to-brand-dark">
+    <section className="relative min-h-screen flex items-center pt-24 md:pt-28 pb-16 md:pb-24 bg-gradient-to-b from-gray-50 to-white dark:from-gray-900/50 dark:to-brand-dark">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           {/* Left Content */}
-          <div className="space-y-6">
+          <div className="space-y-8">
             {/* Trust Badge */}
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-primary/10 border border-brand-primary/20 industrial-glow">
               <ShieldCheck className="w-4 h-4 text-brand-primary" />
