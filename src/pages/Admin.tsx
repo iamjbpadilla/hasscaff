@@ -32,13 +32,11 @@ import {
   Check,
   Inbox,
   Activity,
-  LayoutDashboard,
-  RefreshCw,
-  Plus,
   Users,
   TrendingUp,
   AlertCircle,
   PieChart,
+  ArrowRight,
 } from 'lucide-react';
 
 type SortBy = 'createdAt' | 'updatedAt' | 'status';
@@ -76,7 +74,7 @@ const formatDate = (iso: string) => new Date(iso).toLocaleDateString();
 const Admin: React.FC = () => {
   const { darkMode, setDarkMode } = useTheme();
   const [requests, setRequests] = useState<QuoteRequest[]>(MOCK_QUOTE_REQUESTS);
-  const [view, setView] = useState<AdminView>('overview');
+  const [view, setView] = useState<AdminView>('requests');
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
   const [filterStatus, setFilterStatus] = useState<string>('all');
@@ -269,11 +267,6 @@ const Admin: React.FC = () => {
     }
   };
 
-  const navItems: { id: AdminView; label: string; icon: React.ReactNode }[] = [
-    { id: 'overview', label: 'Overview', icon: <LayoutDashboard className="w-4 h-4" /> },
-    { id: 'requests', label: 'Requests', icon: <Inbox className="w-4 h-4" /> },
-  ];
-
   return (
     <>
       <SEO title="Admin - Hasscaff" description="Manage quote requests and customer inquiries" path="/admin" noIndex />
@@ -290,6 +283,9 @@ const Admin: React.FC = () => {
         <AdminHeader
           title="Admin"
           description="Manage quotes and customer enquiries"
+          view={view}
+          onViewChange={setView}
+          notificationCount={stats.pending}
           onRefresh={() => {
             setRequests(MOCK_QUOTE_REQUESTS);
             setSelectedId(null);
@@ -299,22 +295,6 @@ const Admin: React.FC = () => {
         />
         <div className="bg-gray-50 dark:bg-gray-950 min-h-[calc(100vh-64px)]">
           <div className="w-full px-4 md:px-8 py-6">
-            <nav className="flex items-center gap-2 mb-6 border-2 border-gray-200 dark:border-gray-800 p-1.5 rounded-2xl bg-white dark:bg-gray-900 w-fit">
-              {navItems.map((item) => (
-                <button
-                  key={item.id}
-                  onClick={() => setView(item.id)}
-                  className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold transition-all ${
-                    view === item.id
-                      ? 'bg-brand-primary text-white'
-                      : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800'
-                  }`}
-                >
-                  {item.icon} {item.label}
-                </button>
-              ))}
-            </nav>
-
             <motion.div
               key={view}
               initial={{ opacity: 0, y: 8 }}
@@ -418,6 +398,10 @@ const OverviewTab: React.FC<{
   onExport,
   onRefresh,
 }) => {
+  const maxService = serviceBreakdown.reduce((m, [, c]) => Math.max(m, c), 0) || 1;
+  const maxLocation = locationBreakdown.reduce((m, [, c]) => Math.max(m, c), 0) || 1;
+  const maxStatus = Math.max(...statusBreakdown.map((s) => s.count), 1);
+
   const statList = [
     { label: 'Total', value: stats.total, icon: <Users className="w-5 h-5" />, status: 'all' },
     { label: 'Pending', value: stats.pending, icon: <AlertCircle className="w-5 h-5" />, status: 'pending' },
@@ -425,25 +409,14 @@ const OverviewTab: React.FC<{
     { label: 'Completed', value: stats.completed, icon: <Check className="w-5 h-5" />, status: 'completed' },
   ];
 
-  const quickActions = [
-    { label: 'View Site', icon: <Home className="w-5 h-5" />, href: '/' },
-    { label: 'New Quote', icon: <Plus className="w-5 h-5" />, href: '/contact' },
-    { label: 'Export CSV', icon: <Download className="w-5 h-5" />, onClick: onExport },
-    { label: 'Refresh Data', icon: <RefreshCw className="w-5 h-5" />, onClick: onRefresh },
-  ];
-
-  const maxService = serviceBreakdown.reduce((m, [, c]) => Math.max(m, c), 0) || 1;
-  const maxLocation = locationBreakdown.reduce((m, [, c]) => Math.max(m, c), 0) || 1;
-  const maxStatus = Math.max(...statusBreakdown.map((s) => s.count), 1);
-
   return (
     <div className="space-y-6">
       <section>
-        <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Overview</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">Real-time dashboard for quotes, enquiries and team activity.</p>
+        <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-1">Dashboard</h2>
+        <p className="text-sm text-gray-600 dark:text-gray-400">Everything you need to track quotes, jobs and team activity.</p>
       </section>
 
-      <section className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <section className="grid grid-cols-2 md:grid-cols-4 gap-4" aria-label="At a glance">
         {statList.map((s, i) => (
           <motion.button
             key={s.status}
@@ -463,7 +436,80 @@ const OverviewTab: React.FC<{
         ))}
       </section>
 
-      <section className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <section className="grid grid-cols-1 lg:grid-cols-3 gap-6" aria-label="Pipeline">
+        <ChartCard title="Quote Funnel" icon={<PieChart className="w-5 h-5 text-brand-primary" />} className="lg:col-span-1">
+          <div className="space-y-4">
+            {statusBreakdown.map(({ status, count }, i) => {
+              const pct = (count / maxStatus) * 100;
+              return (
+                <div key={status}>
+                  <div className="flex items-center justify-between text-sm mb-1">
+                    <span className="font-medium text-gray-900 dark:text-white">{STATUS_LABELS[status]}</span>
+                    <span className="font-bold text-gray-500 dark:text-gray-400">{count}</span>
+                  </div>
+                  <div className="h-3 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
+                    <motion.div
+                      className={`h-full rounded-full ${STATUS_COLORS[status].split(' ').pop()}`}
+                      variants={barVariants}
+                      initial="hidden"
+                      animate="visible"
+                      custom={pct}
+                      transition={{ duration: 0.7, delay: 0.1 + i * 0.05 }}
+                    />
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </ChartCard>
+
+        <motion.div
+          variants={cardVariants}
+          initial="hidden"
+          animate="visible"
+          transition={{ duration: 0.3, delay: 0.1 }}
+          className="lg:col-span-2 bg-white dark:bg-gray-900 border-2 border-gray-200 dark:border-gray-800 rounded-2xl p-6"
+        >
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-lg font-bold text-gray-900 dark:text-white flex items-center gap-2">
+              <AlertCircle className="w-5 h-5 text-brand-primary" />
+              Needs Attention
+            </h3>
+            <a
+              href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                onSwitchToRequests('pending');
+              }}
+              className="text-sm font-bold text-brand-primary flex items-center gap-1 hover:gap-2 transition-all"
+            >
+              View all <ArrowRight className="w-4 h-4" />
+            </a>
+          </div>
+          {pendingQueue.length ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {pendingQueue.slice(0, 4).map((r, i) => (
+                <motion.div
+                  key={r.id}
+                  variants={cardVariants}
+                  initial="hidden"
+                  animate="visible"
+                  transition={{ duration: 0.2, delay: i * 0.05 }}
+                  className="p-3 rounded-xl bg-gray-50 dark:bg-gray-900/50 border border-gray-200 dark:border-gray-800"
+                >
+                  <p className="text-sm font-bold text-gray-900 dark:text-white">{r.location}</p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400">{SERVICE_LABELS[r.service]}</p>
+                  <p className="text-xs font-mono text-gray-400 dark:text-gray-500 mt-1">{formatDate(r.createdAt)}</p>
+                </motion.div>
+              ))}
+            </div>
+          ) : (
+            <p className="text-sm text-gray-500 dark:text-gray-400">No pending requests. Great job.</p>
+          )}
+        </motion.div>
+      </section>
+
+      <section className="grid grid-cols-1 lg:grid-cols-2 gap-6" aria-label="Breakdown">
         <ChartCard title="Service Demand" icon={<Building2 className="w-5 h-5 text-brand-primary" />}>
           <div className="space-y-4">
             {serviceBreakdown.map(([service, count], i) => (
@@ -511,33 +557,7 @@ const OverviewTab: React.FC<{
         </ChartCard>
       </section>
 
-      <section className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <ChartCard title="Quote Funnel" icon={<PieChart className="w-5 h-5 text-brand-primary" />} className="lg:col-span-1">
-          <div className="space-y-4">
-            {statusBreakdown.map(({ status, count }, i) => {
-              const pct = (count / maxStatus) * 100;
-              return (
-                <div key={status}>
-                  <div className="flex items-center justify-between text-sm mb-1">
-                    <span className="font-medium text-gray-900 dark:text-white">{STATUS_LABELS[status]}</span>
-                    <span className="font-bold text-gray-500 dark:text-gray-400">{count}</span>
-                  </div>
-                  <div className="h-3 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
-                    <motion.div
-                      className={`h-full rounded-full ${STATUS_COLORS[status].split(' ').pop()}`}
-                      variants={barVariants}
-                      initial="hidden"
-                      animate="visible"
-                      custom={pct}
-                      transition={{ duration: 0.7, delay: 0.1 + i * 0.05 }}
-                    />
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </ChartCard>
-
+      <section className="grid grid-cols-1 lg:grid-cols-3 gap-6" aria-label="Activity">
         <motion.div
           variants={cardVariants}
           initial="hidden"
@@ -545,10 +565,18 @@ const OverviewTab: React.FC<{
           transition={{ duration: 0.3, delay: 0.2 }}
           className="lg:col-span-2 bg-white dark:bg-gray-900 border-2 border-gray-200 dark:border-gray-800 rounded-2xl p-6"
         >
-          <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
-            <Calendar className="w-5 h-5 text-brand-primary" />
-            Recent Enquiries
-          </h3>
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-lg font-bold text-gray-900 dark:text-white flex items-center gap-2">
+              <Calendar className="w-5 h-5 text-brand-primary" />
+              Recent Activity
+            </h3>
+            <button
+              onClick={onExport}
+              className="text-sm font-bold text-brand-primary flex items-center gap-1 hover:gap-2 transition-all"
+            >
+              Export CSV <Download className="w-4 h-4" />
+            </button>
+          </div>
           <div className="overflow-x-auto">
             <table className="w-full text-left text-sm">
               <thead className="bg-gray-50 dark:bg-gray-900/50 border-b border-gray-200 dark:border-gray-800">
@@ -572,9 +600,7 @@ const OverviewTab: React.FC<{
             </table>
           </div>
         </motion.div>
-      </section>
 
-      <section className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <motion.div
           variants={cardVariants}
           initial="hidden"
@@ -582,57 +608,44 @@ const OverviewTab: React.FC<{
           transition={{ duration: 0.3, delay: 0.25 }}
           className="bg-white dark:bg-gray-900 border-2 border-gray-200 dark:border-gray-800 rounded-2xl p-6"
         >
-          <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
-            <AlertCircle className="w-5 h-5 text-brand-primary" />
-            Pending Queue
-          </h3>
-          {pendingQueue.length ? (
-            <div className="space-y-3">
-              {pendingQueue.slice(0, 6).map((r) => (
-                <div key={r.id} className="flex items-center justify-between p-3 rounded-xl bg-gray-50 dark:bg-gray-900/50 border border-gray-200 dark:border-gray-800">
-                  <div>
-                    <p className="text-sm font-bold text-gray-900 dark:text-white">{r.location}</p>
-                    <p className="text-xs text-gray-500 dark:text-gray-400">{SERVICE_LABELS[r.service]}</p>
-                  </div>
-                  <span className="text-xs font-mono text-gray-500 dark:text-gray-400">{formatDate(r.createdAt)}</span>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <p className="text-sm text-gray-500 dark:text-gray-400">No pending requests. Great job.</p>
-          )}
-        </motion.div>
-
-        <motion.div
-          variants={cardVariants}
-          initial="hidden"
-          animate="visible"
-          transition={{ duration: 0.3, delay: 0.3 }}
-          className="bg-white dark:bg-gray-900 border-2 border-gray-200 dark:border-gray-800 rounded-2xl p-6"
-        >
           <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">Quick Actions</h3>
-          <div className="grid grid-cols-2 gap-4">
-            {quickActions.map((a, i) => (
-              <React.Fragment key={i}>
-                {a.href ? (
-                  <a
-                    href={a.href}
-                    className="flex items-center gap-3 p-4 rounded-xl border-2 border-gray-200 dark:border-gray-800 hover:border-brand-primary transition-colors"
-                  >
-                    <div className="w-10 h-10 rounded-xl bg-brand-primary/10 flex items-center justify-center text-brand-primary">{a.icon}</div>
-                    <span className="font-bold text-gray-900 dark:text-white">{a.label}</span>
-                  </a>
-                ) : (
-                  <button
-                    onClick={a.onClick}
-                    className="flex items-center gap-3 p-4 rounded-xl border-2 border-gray-200 dark:border-gray-800 hover:border-brand-primary transition-colors text-left"
-                  >
-                    <div className="w-10 h-10 rounded-xl bg-brand-primary/10 flex items-center justify-center text-brand-primary">{a.icon}</div>
-                    <span className="font-bold text-gray-900 dark:text-white">{a.label}</span>
-                  </button>
-                )}
-              </React.Fragment>
-            ))}
+          <div className="space-y-3">
+            <a
+              href="/contact"
+              className="flex items-center gap-3 p-3 rounded-xl border-2 border-gray-200 dark:border-gray-800 hover:border-brand-primary transition-colors"
+            >
+              <div className="w-10 h-10 rounded-xl bg-brand-primary/10 flex items-center justify-center text-brand-primary">
+                <Home className="w-5 h-5" />
+              </div>
+              <span className="font-bold text-gray-900 dark:text-white">View Site</span>
+            </a>
+            <a
+              href="/contact"
+              className="flex items-center gap-3 p-3 rounded-xl border-2 border-gray-200 dark:border-gray-800 hover:border-brand-primary transition-colors"
+            >
+              <div className="w-10 h-10 rounded-xl bg-brand-primary/10 flex items-center justify-center text-brand-primary">
+                <Check className="w-5 h-5" />
+              </div>
+              <span className="font-bold text-gray-900 dark:text-white">New Quote</span>
+            </a>
+            <button
+              onClick={onExport}
+              className="w-full flex items-center gap-3 p-3 rounded-xl border-2 border-gray-200 dark:border-gray-800 hover:border-brand-primary transition-colors text-left"
+            >
+              <div className="w-10 h-10 rounded-xl bg-brand-primary/10 flex items-center justify-center text-brand-primary">
+                <Download className="w-5 h-5" />
+              </div>
+              <span className="font-bold text-gray-900 dark:text-white">Export CSV</span>
+            </button>
+            <button
+              onClick={onRefresh}
+              className="w-full flex items-center gap-3 p-3 rounded-xl border-2 border-gray-200 dark:border-gray-800 hover:border-brand-primary transition-colors text-left"
+            >
+              <div className="w-10 h-10 rounded-xl bg-brand-primary/10 flex items-center justify-center text-brand-primary">
+                <RefreshCw className="w-5 h-5" />
+              </div>
+              <span className="font-bold text-gray-900 dark:text-white">Refresh Data</span>
+            </button>
           </div>
         </motion.div>
       </section>
